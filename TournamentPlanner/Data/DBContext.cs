@@ -13,9 +13,9 @@ namespace TournamentPlanner.Data
             : base(options)
         {
             //Database.EnsureDeleted();
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         }
 
-        public DbSet<TournamentPlanner.Models.Player> Player { get; set; }
+        public DbSet<Player> Player { get; set; }
     }
 }

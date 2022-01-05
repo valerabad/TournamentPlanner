@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TournamentPlanner.Models
 {
-    public class Player
+    public class DbPlayer
     {
         public int Id { get; set; }
         [Required]
@@ -16,7 +16,6 @@ namespace TournamentPlanner.Models
 
         public int AddressId { get; set; }
         public int ClubId { get; set; }
-        public string EntryMethod { get; set; }
 
     }
 }

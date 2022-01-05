@@ -56,9 +56,20 @@ namespace TournamentPlanner.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Player player)
         {
-            //test
             if (ModelState.IsValid)
             {
+                var dbPlayer = new DbPlayer()
+                {
+                    Id = player.Id,
+                    FirstName = player.FirstName,
+                    LastName = player.LastName,
+                    Gender = player.Gender,
+                    Birthday = player.Birthday,
+                    AddressId = player.AddressId,
+                    ClubId = player.ClubId
+                };
+
+                //_context.Add(dbPlayer);
                 _context.Add(player);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
