@@ -56,6 +56,7 @@ namespace TournamentPlanner.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Player player)
         {
+            //test
             if (ModelState.IsValid)
             {
                 _context.Add(player);
