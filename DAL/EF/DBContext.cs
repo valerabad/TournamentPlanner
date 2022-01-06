@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using TournamentPlanner.Models;
+using TournamentPlanner.DAL.Entities;
 
-namespace TournamentPlanner.Data
+namespace TournamentPlanner.DAL.EF
 {
     public class DBContext : DbContext
     {
@@ -16,6 +16,6 @@ namespace TournamentPlanner.Data
             //Database.EnsureCreated();
         }
 
-        public DbSet<PlayerViewModel> Player { get; set; }
+        public DbSet<Player> Players { get; set; }
     }
 }
