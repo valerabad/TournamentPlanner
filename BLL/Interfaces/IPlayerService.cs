@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace BLL.Interfaces
 {
-    internal interface IPlayerService
+    public interface IPlayerService
     {
         PlayerDTO GetPlayer(int? id);
         IEnumerable<PlayerDTO> GetPlayers();
-        void Dispose();
+        //void Dispose();
     }
 }

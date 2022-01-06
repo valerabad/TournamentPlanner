@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace BLL.DTO
 {
     // copy model for transfer data, without field which not needed to view (for ex. - Collections)
-    internal class PlayerDTO
+    public class PlayerDTO
     {
             public int Id { get; set; }
             [Required]

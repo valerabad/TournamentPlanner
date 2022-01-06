@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DAL.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,48 +13,17 @@ using TournamentPlanner.DAL.Repositories;
 
 namespace DAL.Repositories
 {
-    internal class EFUnitOfWork : IUnitOfWork
+    public class EFUnitOfWork : IUnitOfWork
     {
-        private DBContext db;
-        private PlayerRepository playerRepository;
-
-        public EFUnitOfWork(DbContextOptions<DBContext> connectionString)
+        public IPlayerRepository PlayersRepository { get; }
+        public EFUnitOfWork(IPlayerRepository context)
         {
-            db = new DBContext(connectionString);
-        }
-        public IRepository<Player> Players
-        {
-            get
-            {
-                if (playerRepository == null)
-                    playerRepository = new PlayerRepository(db);
-                return playerRepository;
-            }
-        }
-
-        public void Save()
-        {
-            db.SaveChanges();
+            PlayersRepository = context;
         }
 
         private bool disposed = false;
 
-        public virtual void Dispose(bool disposing)
-        {
-            if (!this.disposed)
-            {
-                if (disposing)
-                {
-                    db.Dispose();
-                }
-                this.disposed = true;
-            }
-        }
 
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
+
     }
 }

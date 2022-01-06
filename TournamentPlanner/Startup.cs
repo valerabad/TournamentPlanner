@@ -9,7 +9,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using TournamentPlanner.Data;
+using BLL.Interfaces;
+using BLL.Services;
+using TournamentPlanner.DAL.Interfaces;
+using DAL.Repositories;
+using TournamentPlanner.DAL.EF;
+using DAL.Interfaces;
+using TournamentPlanner.DAL.Repositories;
 
 namespace TournamentPlanner
 {
@@ -29,6 +35,12 @@ namespace TournamentPlanner
 
             services.AddDbContext<DBContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("DBContext")));
+
+            services.AddTransient<IPlayerService, PlayerService>();
+
+            services.AddTransient<IUnitOfWork, EFUnitOfWork>();
+
+            services.AddTransient <IPlayerRepository, PlayerRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

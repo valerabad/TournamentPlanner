@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using DAL.Interfaces;
+using System.Collections.Generic;
 using TournamentPlanner.DAL.EF;
 using TournamentPlanner.DAL.Entities;
 using TournamentPlanner.DAL.Interfaces;
 
 namespace TournamentPlanner.DAL.Repositories
 {
-    public class PlayerRepository : IRepository<Player>
+    public class PlayerRepository : IPlayerRepository
     {
         private DBContext _context;
 
@@ -27,6 +28,7 @@ namespace TournamentPlanner.DAL.Repositories
         public void Create(Player player)
         {
             _context.Players.Add(player);
+            _context.SaveChanges();
         }
 
     }
