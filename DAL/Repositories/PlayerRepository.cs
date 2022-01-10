@@ -31,5 +31,17 @@ namespace TournamentPlanner.DAL.Repositories
             _context.SaveChanges();
         }
 
+        public void Update(Player item)
+        {
+            _context.Players.Update(item);
+            _context.SaveChanges();
+        }
+
+        public void Delete(int id)
+        {
+            Player playerForRemove = _context.Players.Find(id);
+            _context.Remove(playerForRemove);
+            _context.SaveChanges();
+        }
     }
 }

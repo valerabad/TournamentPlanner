@@ -9,8 +9,14 @@ namespace BLL.Interfaces
 {
     public interface IPlayerService
     {
-        PlayerDTO GetPlayer(int? id);
         IEnumerable<PlayerDTO> GetPlayers();
+        PlayerDTO GetPlayer(int? id);
+        void Create(PlayerDTO player);
+        string Send();
+
+        void Edit(PlayerDTO player);
+        void Delete(int? id);
+
         //void Dispose();
     }
 }

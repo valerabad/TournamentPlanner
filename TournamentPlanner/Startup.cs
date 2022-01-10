@@ -16,14 +16,18 @@ using DAL.Repositories;
 using TournamentPlanner.DAL.EF;
 using DAL.Interfaces;
 using TournamentPlanner.DAL.Repositories;
+using System.Text;
+using Microsoft.AspNetCore.Http;
 
 namespace TournamentPlanner
 {
     public class Startup
     {
+        private IServiceCollection _services;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+           
         }
 
         public IConfiguration Configuration { get; }
@@ -31,6 +35,7 @@ namespace TournamentPlanner
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            _services = services;
             services.AddControllersWithViews();
 
             services.AddDbContext<DBContext>(options =>
@@ -46,6 +51,7 @@ namespace TournamentPlanner
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -59,6 +65,16 @@ namespace TournamentPlanner
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            //app.UseMiddleware<PlayerMiddleware>();
+
+            //app.Run(async (context) =>
+            //{
+            //    //IPlayerService plService = context.RequestServices.GetService<IPlayerService>();
+            //    IPlayerService plService = app.ApplicationServices.GetService<IPlayerService>();
+            //    //context.Response.ContentType = "text/html;charset=utf-8";
+            //    await context.Response.WriteAsync(plService.Send());
+            //});
+
             app.UseRouting();
 
             app.UseAuthorization();
@@ -69,6 +85,27 @@ namespace TournamentPlanner
                     name: "default",
                     pattern: "{controller=Players}/{action=Index}/{id?}");
             });
+
+         
+
+            //app.Run(async context =>
+            //{
+            //    var sb = new StringBuilder();
+            //    sb.Append("<h1>Все сервисы</h1>");
+            //    sb.Append("<table>");
+            //    sb.Append("<tr><th>Тип</th><th>Lifetime</th><th>Реализация</th></tr>");
+            //    foreach (var svc in _services)
+            //    {
+            //        sb.Append("<tr>");
+            //        sb.Append($"<td>{svc.ServiceType.FullName}</td>");
+            //        sb.Append($"<td>{svc.Lifetime}</td>");
+            //        sb.Append($"<td>{svc.ImplementationType?.FullName}</td>");
+            //        sb.Append("</tr>");
+            //    }
+            //    sb.Append("</table>");
+            //    context.Response.ContentType = "text/html;charset=utf-8";
+            //    await context.Response.WriteAsync(sb.ToString());
+            //});
         }
     }
 }

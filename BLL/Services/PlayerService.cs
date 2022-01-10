@@ -6,10 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TournamentPlanner.DAL.Interfaces;
+using TournamentPlanner.DAL.Entities;
 
 namespace BLL.Services
 {
-    public class PlayerService :IPlayerService
+    public class PlayerService : IPlayerService
     {
         IUnitOfWork Database { get; set; }
 
@@ -44,9 +45,65 @@ namespace BLL.Services
         {
             var player = Database.PlayersRepository.Get(id.Value);
 
-            return new PlayerDTO { FirstName = player.FirstName, Id = player.Id }; // add all fields
+            return new PlayerDTO
+            {
+                FirstName = player.FirstName,
+                LastName = player.LastName,
+                EntryMethod = player.EntryMethod,
+                AddressId = player.AddressId,
+                Birthday = player.Birthday,
+                Gender = player.Gender,
+                Notes = player.Notes,
+                Id = player.Id
+            };
         }
 
-       
+        public string Send()
+        {
+            return "I'm player!";
+        }
+
+        public void Create(PlayerDTO playerDTO)
+        {
+            var player = new Player()
+            {
+                Id = playerDTO.Id,
+                AddressId = playerDTO.AddressId,
+                FirstName = playerDTO.FirstName,
+                Birthday = playerDTO.Birthday,
+                ClubId = playerDTO.ClubId,
+                Gender = playerDTO.Gender,
+                EntryMethod = playerDTO.EntryMethod,
+                LastName = playerDTO.LastName,
+                Notes = playerDTO.Notes
+            };
+            Database.PlayersRepository.Create(player);
+        }
+
+        public void Edit(PlayerDTO playerDTO)
+        {
+            var updatedPlayer = new Player()
+            {
+                Id = playerDTO.Id,
+                AddressId = playerDTO.AddressId,
+                FirstName = playerDTO.FirstName,
+                Birthday = playerDTO.Birthday,
+                ClubId = playerDTO.ClubId,
+                Gender = playerDTO.Gender,
+                EntryMethod = playerDTO.EntryMethod,
+                LastName = playerDTO.LastName,
+                Notes = playerDTO.Notes
+            };
+
+            if (updatedPlayer != null)
+                Database.PlayersRepository.Update(updatedPlayer);
+
+        }
+
+        public void Delete(int? id)
+        {
+            Database.PlayersRepository.Delete(id.Value);
+
+        }
     }
 }
