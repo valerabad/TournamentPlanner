@@ -82,22 +82,21 @@ namespace BLL.Services
 
         public void Edit(PlayerDTO playerDTO)
         {
-            var updatedPlayer = new Player()
+
+            var foundPlayer = Database.PlayersRepository.Get(playerDTO.Id);
+            if (foundPlayer != null)
             {
-                Id = playerDTO.Id,
-                AddressId = playerDTO.AddressId,
-                FirstName = playerDTO.FirstName,
-                Birthday = playerDTO.Birthday,
-                ClubId = playerDTO.ClubId,
-                Gender = playerDTO.Gender,
-                EntryMethod = playerDTO.EntryMethod,
-                LastName = playerDTO.LastName,
-                Notes = playerDTO.Notes
-            };
+                foundPlayer.FirstName = playerDTO.FirstName;
+                foundPlayer.Birthday = playerDTO.Birthday;
+                foundPlayer.ClubId = playerDTO.ClubId;
+                foundPlayer.LastName = playerDTO.LastName;
+                foundPlayer.Notes = playerDTO.Notes;
+                foundPlayer.Gender = playerDTO.Gender;
+                foundPlayer.EntryMethod = playerDTO.EntryMethod;
+                
 
-            if (updatedPlayer != null)
-                Database.PlayersRepository.Update(updatedPlayer);
-
+                Database.PlayersRepository.Update(foundPlayer);
+            }
         }
 
         public void Delete(int? id)
