@@ -42,10 +42,12 @@ namespace TournamentPlanner
                     options.UseSqlServer(Configuration.GetConnectionString("DBContext")));
 
             services.AddTransient<IPlayerService, PlayerService>();
+            services.AddTransient<IClubService, ClubService>();
 
             services.AddTransient<IUnitOfWork, EFUnitOfWork>();
 
             services.AddTransient <IPlayerRepository, PlayerRepository>();
+            services.AddTransient <IClubRepository, ClubRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -82,8 +84,14 @@ namespace TournamentPlanner
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                   name: "default",
+                   pattern: "{controller=Players}/{action=Create}");
+                endpoints.MapControllerRoute(
+                   name: "default",
+                   pattern: "{controller=Players}/{action=Edit}/{id=1}");
+                endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Players}/{action=Index}/{id?}");
+                    pattern: "{controller=Players}/{action=Edit}/{id?}");
             });
 
          

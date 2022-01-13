@@ -93,7 +93,6 @@ namespace BLL.Services
                 foundPlayer.Notes = playerDTO.Notes;
                 foundPlayer.Gender = playerDTO.Gender;
                 foundPlayer.EntryMethod = playerDTO.EntryMethod;
-                
 
                 Database.PlayersRepository.Update(foundPlayer);
             }

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace TournamentPlanner.Models
 {
@@ -16,6 +18,9 @@ namespace TournamentPlanner.Models
 
         public int AddressId { get; set; }
         public int ClubId { get; set; }
+
+        public IEnumerable<ClubViewModel> Clubs { get; set; }
+
         public string EntryMethod { get; set; }
 
     }

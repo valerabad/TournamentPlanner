@@ -14,10 +14,12 @@ namespace TournamentPlanner.Controllers
     public class PlayersController : Controller
     {
         private readonly IPlayerService playerService;
+        private readonly IClubService clubService;
 
-        public PlayersController(IPlayerService playerService)
+        public PlayersController(IPlayerService playerService, IClubService clubService)
         {
             this.playerService = playerService;
+            this.clubService = clubService;
         }
 
         // GET: Players
@@ -46,17 +48,18 @@ namespace TournamentPlanner.Controllers
             }
 
             var player = playerService.GetPlayer(id);
-            PlayerViewModel playerViewModel = new PlayerViewModel() 
+            PlayerViewModel playerViewModel = new PlayerViewModel()
             {
                 Id = player.Id,
                 FirstName = player.FirstName,
-                AddressId= player.AddressId,
-                Birthday= player.Birthday,
+                AddressId = player.AddressId,
+                Birthday = player.Birthday,
                 ClubId = player.ClubId,
-                EntryMethod= player.EntryMethod,
+                EntryMethod = player.EntryMethod,
                 Gender = player.Gender,
                 LastName = player.LastName,
-                Notes = player.Notes
+                Notes = player.Notes,
+                //Clubs = model
             };
             if (player == null)
             {
@@ -69,7 +72,21 @@ namespace TournamentPlanner.Controllers
         //    // GET: Players/Create
         public IActionResult Create()
         {
-            return View();
+            // We have not use DAL here, but just for test 
+            var clubList = clubService.GetClubs().Select(x => new ClubViewModel
+            {
+                Logo = x.Logo,
+                Id = x.Id,
+                Title = x.Title,
+                Description = x.Description
+            });
+
+            PlayerViewModel playerViewModel = new PlayerViewModel()
+            {
+                Clubs = clubList
+            };
+
+            return View(playerViewModel);
         }
 
         // POST: Players/Create
@@ -85,11 +102,11 @@ namespace TournamentPlanner.Controllers
                     FirstName = player.FirstName,
                     AddressId = player.AddressId,
                     Birthday = player.Birthday,
-                    ClubId = player.ClubId,
                     EntryMethod = player.EntryMethod,
                     Gender = player.Gender,
                     LastName = player.LastName,
-                    Notes = player.Notes
+                    Notes = player.Notes,
+                    ClubId = player.ClubId
                 };
                
                 playerService.Create(playerDTO);
@@ -111,6 +128,7 @@ namespace TournamentPlanner.Controllers
             {
                 return NotFound();
             }
+
             PlayerViewModel playerViewModel = new PlayerViewModel()
             {
                 Id = player.Id,
@@ -119,7 +137,8 @@ namespace TournamentPlanner.Controllers
                 EntryMethod = player.EntryMethod,
                 Gender = player.Gender,
                 LastName = player.LastName,
-                Notes = player.Notes
+                Notes = player.Notes,
+                //Clubs = model
                 //ClubId = player.ClubId,
                 //AddressId = player.AddressId,
             };
