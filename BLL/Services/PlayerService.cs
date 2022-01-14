@@ -55,7 +55,8 @@ namespace BLL.Services
                 Birthday = player.Birthday,
                 Gender = player.Gender,
                 Notes = player.Notes,
-                Id = player.Id
+                Id = player.Id,
+                ClubId = player.ClubId
             };
         }
 

@@ -129,18 +129,27 @@ namespace TournamentPlanner.Controllers
                 return NotFound();
             }
 
+
+            var avaliableClubs = clubService.GetClubs().Select(x => new ClubViewModel()
+            {
+                Id = x.Id,
+                Logo = x.Logo,
+                Description = x.Description,
+                Title = x.Title
+            });
+
             PlayerViewModel playerViewModel = new PlayerViewModel()
             {
                 Id = player.Id,
                 FirstName = player.FirstName,
+                AddressId = player.AddressId,
                 Birthday = player.Birthday,
+                ClubId = player.ClubId,
                 EntryMethod = player.EntryMethod,
                 Gender = player.Gender,
                 LastName = player.LastName,
                 Notes = player.Notes,
-                //Clubs = model
-                //ClubId = player.ClubId,
-                //AddressId = player.AddressId,
+                Clubs = avaliableClubs
             };
             return View(playerViewModel);
         }
@@ -204,6 +213,15 @@ namespace TournamentPlanner.Controllers
                 return NotFound();
             }
 
+            ClubDTO clubDTO = clubService.GetClub(player.ClubId);
+            ClubViewModel clubViewModel = new ClubViewModel()
+            {
+                Id = clubDTO.Id,
+                Logo = clubDTO.Logo,
+                Description = clubDTO.Description,
+                Title = clubDTO.Title
+            };
+
             PlayerViewModel playerViewModel = new PlayerViewModel()
             {
                 Id = player.Id,
@@ -214,9 +232,10 @@ namespace TournamentPlanner.Controllers
                 EntryMethod = player.EntryMethod,
                 Gender = player.Gender,
                 LastName = player.LastName,
-                Notes = player.Notes
-            };
+                Notes = player.Notes,
+                Clubs = new List<ClubViewModel> { clubViewModel}
 
+            };
             return View(playerViewModel);
         }
 
