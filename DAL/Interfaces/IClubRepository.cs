@@ -10,5 +10,6 @@ namespace DAL.Interfaces
     public interface IClubRepository
     {
         IEnumerable<Club> GetAll();
+        Club Get(int? id);
     }
 }

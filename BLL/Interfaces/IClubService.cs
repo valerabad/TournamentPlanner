@@ -10,5 +10,7 @@ namespace BLL.Interfaces
     public interface IClubService
     {
         IEnumerable<ClubDTO> GetClubs();
+
+        ClubDTO GetClub(int? id);
     }
 }

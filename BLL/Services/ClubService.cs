@@ -29,5 +29,16 @@ namespace BLL.Services
             });
             return clubs;
         }
+
+        public ClubDTO GetClub(int? id)
+        {
+            var foundClub = clubRepository.Get(id);
+            return new ClubDTO { 
+                Title = foundClub.Title, 
+                Description = foundClub.Description, 
+                Id = foundClub.Id, 
+                Logo =foundClub.Logo
+            };
+        }
     }
 }

@@ -30,7 +30,8 @@ namespace BLL.Services
                 Birthday = x.Birthday,
                 Gender = x.Gender,
                 Notes = x.Notes,
-                Id = x.Id
+                Id = x.Id,
+                ClubId = x.ClubId
             });
 
 

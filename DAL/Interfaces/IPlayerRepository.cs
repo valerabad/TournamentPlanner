@@ -15,7 +15,7 @@ namespace DAL.Interfaces
         Player Get(int id);
         //IEnumerable<T> Find(Func<T, Boolean> predicate);
         void Create(Player item);
-        void Update(Player item);
+        void Update(Player item);   
         void Delete(int id);
     }
 }

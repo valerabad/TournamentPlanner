@@ -20,5 +20,10 @@ namespace DAL.Repositories
         {
             return _context.Clubs;
         }
+
+        public Club Get(int? id)
+        {
+            return _context.Clubs.Find(id);
+        }
     }
 }

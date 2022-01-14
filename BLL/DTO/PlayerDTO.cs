@@ -19,7 +19,7 @@ namespace BLL.DTO
             public DateTime Birthday { get; set; }
             public string Notes { get; set; }
             public int AddressId { get; set; }
-            public int ClubId { get; set; }
+            public int? ClubId { get; set; }
             public string EntryMethod { get; set; }
     }
 }

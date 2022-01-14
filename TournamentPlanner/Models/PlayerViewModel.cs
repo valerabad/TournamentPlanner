@@ -17,7 +17,7 @@ namespace TournamentPlanner.Models
         public string Notes { get; set; }
 
         public int AddressId { get; set; }
-        public int ClubId { get; set; }
+        public int? ClubId { get; set; }
 
         public IEnumerable<ClubViewModel> Clubs { get; set; }
 
