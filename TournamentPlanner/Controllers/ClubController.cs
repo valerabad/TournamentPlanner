@@ -44,9 +44,7 @@ namespace TournamentPlanner.Controllers
                 Logo = club.Logo,
                 Title = club.Title,
                 Description = club.Description,
-                PlayersList = playerService.GetPlayers().
-                Where(x => x.ClubId == id)
-                .Select(x => new PlayerViewModel
+                PlayersList = clubService.GetPlayersByClubId((int)id).Select(x => new PlayerViewModel
                 {
                     FirstName = x.FirstName,
                     LastName = x.LastName,
@@ -66,6 +64,8 @@ namespace TournamentPlanner.Controllers
                 return NotFound();
             }
 
+            ViewData["TotlaPlayers"] = clubService.GetCountPlayers((int)id);
+            //ViewData["TotlaPlayers"] = playerService.GetPlayers().Where(x => x.ClubId == id).Count();
             return View(clubViewModel);
         }
     }

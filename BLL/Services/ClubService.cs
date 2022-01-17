@@ -40,5 +40,26 @@ namespace BLL.Services
                 Logo =foundClub.Logo
             };
         }
+
+        public IEnumerable<PlayerDTO> GetPlayersByClubId(int id)
+        {
+            return clubRepository.GetPlayersByClubId(id).Select(x => new PlayerDTO
+            {
+                Id = x.Id,
+                AddressId = x.AddressId,
+                Birthday = x.Birthday,
+                ClubId = x.ClubId,
+                EntryMethod = x.EntryMethod,
+                FirstName = x.FirstName,
+                Gender = x.Gender,
+                LastName = x.LastName,
+                Notes = x.Notes
+            });
+        }
+
+        public int GetCountPlayers(int id)
+        {
+            return GetPlayersByClubId(id).Count();
+        }
     }
 }

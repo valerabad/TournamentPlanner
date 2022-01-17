@@ -25,5 +25,10 @@ namespace DAL.Repositories
         {
             return _context.Clubs.Find(id);
         }
+
+        public IEnumerable<Player> GetPlayersByClubId(int id)
+        {
+            return _context.Players.Where(x=>x.ClubId == id);
+        }
     }
 }
