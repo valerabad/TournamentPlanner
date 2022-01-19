@@ -61,5 +61,10 @@ namespace BLL.Services
         {
             return GetPlayersByClubId(id).Count();
         }
+
+        public void DeletePlayer(int playerId)
+        {
+            clubRepository.RemovePlayer(playerId);
+        }
     }
 }

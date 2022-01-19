@@ -30,5 +30,12 @@ namespace DAL.Repositories
         {
             return _context.Players.Where(x=>x.ClubId == id);
         }
+        public void RemovePlayer(int playerId)
+        {
+            var player = _context.Players.
+                Where(x => x.Id == playerId).
+                FirstOrDefault().ClubId = null;
+            _context.SaveChanges();
+        }
     }
 }

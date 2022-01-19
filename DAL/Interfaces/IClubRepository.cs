@@ -12,5 +12,6 @@ namespace DAL.Interfaces
         IEnumerable<Club> GetAll();
         Club Get(int? id);
         IEnumerable<Player> GetPlayersByClubId(int id);
+        void RemovePlayer(int playerId);
     }
 }

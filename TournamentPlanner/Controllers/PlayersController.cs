@@ -213,14 +213,14 @@ namespace TournamentPlanner.Controllers
                 return NotFound();
             }
 
-            ClubDTO clubDTO = clubService.GetClub(player.ClubId);
-            ClubViewModel clubViewModel = new ClubViewModel()
-            {
-                Id = clubDTO.Id,
-                Logo = clubDTO.Logo,
-                Description = clubDTO.Description,
-                Title = clubDTO.Title
-            };
+            //ClubDTO clubDTO = clubService.GetClub(player.ClubId);
+            //ClubViewModel clubViewModel = new ClubViewModel()
+            //{
+            //    Id = clubDTO.Id,
+            //    Logo = clubDTO.Logo,
+            //    Description = clubDTO.Description,
+            //    Title = clubDTO.Title
+            //};
 
             PlayerViewModel playerViewModel = new PlayerViewModel()
             {
@@ -233,7 +233,7 @@ namespace TournamentPlanner.Controllers
                 Gender = player.Gender,
                 LastName = player.LastName,
                 Notes = player.Notes,
-                Clubs = new List<ClubViewModel> { clubViewModel}
+                //Clubs = new List<ClubViewModel> { clubViewModel}
 
             };
             return View(playerViewModel);
