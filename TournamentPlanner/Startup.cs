@@ -87,7 +87,7 @@ namespace TournamentPlanner
             {
                 endpoints.MapControllerRoute(
                    name: "default",
-                   pattern: "{controller=Players}/{action=Create}");
+                   pattern: "{controller=Club}/{action=Create}");
                 endpoints.MapControllerRoute(
                    name: "default",
                    pattern: "{controller=Players}/{action=Edit}/{id=1}");

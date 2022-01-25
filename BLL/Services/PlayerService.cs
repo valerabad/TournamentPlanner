@@ -105,5 +105,7 @@ namespace BLL.Services
             Database.PlayersRepository.Delete(id.Value);
 
         }
+
+
     }
 }

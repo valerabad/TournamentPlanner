@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TournamentPlanner.DAL.Entities;
 
 namespace BLL.Services
 {
@@ -13,9 +14,11 @@ namespace BLL.Services
     {
         // UNitOFWorks is missed
         IClubRepository clubRepository { get; set; }
-        public ClubService(IClubRepository repo)
+        IPlayerRepository playerRepository { get; set; }
+        public ClubService(IClubRepository repo, IPlayerRepository playerRepository)
         {
             clubRepository = repo;
+            this.playerRepository = playerRepository;
         }
 
         public IEnumerable<ClubDTO> GetClubs()
@@ -62,9 +65,20 @@ namespace BLL.Services
             return GetPlayersByClubId(id).Count();
         }
 
-        public void DeletePlayer(int playerId)
+        public void DeletePlayer(int? playerId, int? clubId)
         {
-            clubRepository.RemovePlayer(playerId);
+            playerRepository.UpdateClub(playerId, null);
+        }
+
+        public void Create(ClubDTO clubDTO)
+        {
+            var club = new Club()
+            {
+                Title = clubDTO.Title,
+                Id = clubDTO.Id,
+                Logo = clubDTO.Logo
+            };
+            clubRepository.CreateClub(club);
         }
     }
 }

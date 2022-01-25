@@ -15,6 +15,7 @@ namespace BLL.Interfaces
         IEnumerable<PlayerDTO> GetPlayersByClubId(int id);
         int GetCountPlayers(int id);
 
-        void DeletePlayer(int playerId);
+        void DeletePlayer(int? playerId, int? clubId);
+        void Create(ClubDTO club);
     }
 }

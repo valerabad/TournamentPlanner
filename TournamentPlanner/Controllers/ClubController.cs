@@ -105,12 +105,38 @@ namespace TournamentPlanner.Controllers
             return View(clubViewModel);
         }
 
-        public IActionResult DeletePlayer(int playerId)
+        public IActionResult DeletePlayer(int playerId, int? clubId)
         {
-            clubService.DeletePlayer(playerId);
-            return RedirectToAction(nameof(Index));
+            clubService.DeletePlayer(playerId, clubId);
+            return RedirectToAction(nameof(Edit), new { id = clubId });
 
             //return RedirectToPage("/Edit?id=" + clubId);
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            ClubViewModel clubView = new ClubViewModel();
+            return View(clubView);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken] // ?
+        public IActionResult Create(ClubViewModel clubView)
+        {
+            if (ModelState.IsValid)
+            {
+                var clubDTO = new ClubDTO
+                {
+                    Id = clubView.Id,
+                    Title = clubView.Title,
+                    Description = clubView.Description,
+                    Logo = clubView?.Logo,
+                };
+                clubService.Create(clubDTO);
+                return RedirectToAction("Index");
+            }
+            return View(clubView);
         }
     }
 }
