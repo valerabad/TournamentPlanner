@@ -89,9 +89,6 @@ namespace DAL.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TestField")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ClubId");
@@ -139,7 +136,7 @@ namespace DAL.Migrations
             modelBuilder.Entity("TournamentPlanner.DAL.Entities.Player", b =>
                 {
                     b.HasOne("TournamentPlanner.DAL.Entities.Club", "Club")
-                        .WithMany("Clubs")
+                        .WithMany("Players")
                         .HasForeignKey("ClubId");
 
                     b.Navigation("Club");
@@ -147,7 +144,7 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("TournamentPlanner.DAL.Entities.Club", b =>
                 {
-                    b.Navigation("Clubs");
+                    b.Navigation("Players");
                 });
 #pragma warning restore 612, 618
         }

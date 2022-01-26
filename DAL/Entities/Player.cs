@@ -19,8 +19,5 @@ namespace TournamentPlanner.DAL.Entities
         public int? ClubId { get; set; }
         public virtual Club Club { get; set; }
 
-
-        public string TestField { get; set; }
-
     }
 }

@@ -13,7 +13,7 @@ namespace TournamentPlanner.DAL.EF
             : base(options)
         {
             //Database.EnsureDeleted();
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

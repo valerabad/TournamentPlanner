@@ -10,8 +10,8 @@ using TournamentPlanner.DAL.EF;
 namespace DAL.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20220126102810_Test1")]
-    partial class Test1
+    [Migration("20220126170333_InitMigration")]
+    partial class InitMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -138,7 +138,7 @@ namespace DAL.Migrations
             modelBuilder.Entity("TournamentPlanner.DAL.Entities.Player", b =>
                 {
                     b.HasOne("TournamentPlanner.DAL.Entities.Club", "Club")
-                        .WithMany("Clubs")
+                        .WithMany("Players")
                         .HasForeignKey("ClubId");
 
                     b.Navigation("Club");
@@ -146,7 +146,7 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("TournamentPlanner.DAL.Entities.Club", b =>
                 {
-                    b.Navigation("Clubs");
+                    b.Navigation("Players");
                 });
 #pragma warning restore 612, 618
         }

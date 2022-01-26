@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DAL.Migrations
 {
-    public partial class Test1 : Migration
+    public partial class Init_Migration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -35,7 +35,9 @@ namespace DAL.Migrations
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AddressId = table.Column<int>(type: "int", nullable: false),
                     EntryMethod = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ClubId = table.Column<int>(type: "int", nullable: true)
+                    ClubId = table.Column<int>(type: "int", nullable: true),
+                    TestField = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TestField2 = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -65,14 +67,14 @@ namespace DAL.Migrations
 
             migrationBuilder.InsertData(
                 table: "Players",
-                columns: new[] { "Id", "AddressId", "Birthday", "ClubId", "EntryMethod", "FirstName", "Gender", "LastName", "Notes" },
+                columns: new[] { "Id", "AddressId", "Birthday", "ClubId", "EntryMethod", "FirstName", "Gender", "LastName", "Notes", "TestField", "TestField2" },
                 values: new object[,]
                 {
-                    { 1, 0, null, 1, null, "Valeriy", null, null, null },
-                    { 2, 0, null, 1, null, "Anton", null, null, null },
-                    { 3, 0, null, 2, null, "Elena", null, null, null },
-                    { 4, 0, null, 3, null, "Kateryna", null, null, null },
-                    { 5, 0, null, 3, null, "Sergey", null, null, null }
+                    { 1, 0, null, 1, null, "Valeriy", null, null, null, null, null },
+                    { 2, 0, null, 1, null, "Anton", null, null, null, null, null },
+                    { 3, 0, null, 2, null, "Elena", null, null, null, null, null },
+                    { 4, 0, null, 3, null, "Kateryna", null, null, null, null, null },
+                    { 5, 0, null, 3, null, "Sergey", null, null, null, null, null }
                 });
 
             migrationBuilder.CreateIndex(
