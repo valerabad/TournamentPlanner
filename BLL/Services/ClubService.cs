@@ -81,5 +81,37 @@ namespace BLL.Services
             };
             clubRepository.CreateClub(club);
         }
+
+        public IEnumerable<PlayerDTO> GetPlayersWithoutClub()
+        {
+            return clubRepository.GetPlayersWithoutClub().Select(x => new PlayerDTO
+            {
+                Id = x.Id,
+                AddressId = x.AddressId,
+                Birthday = x.Birthday,
+                ClubId = x.ClubId,
+                EntryMethod = x.EntryMethod,
+                FirstName = x.FirstName,
+                Gender = x.Gender,
+                LastName = x.LastName,
+                Notes = x.Notes
+            });
+        }
+
+        //public IEnumerable<PlayerDTO> GetPlayers()
+        //{
+        //    return clubRepository.GetPlayers().Select(x => new PlayerDTO
+        //    {
+        //        Id = x.Id,
+        //        AddressId = x.AddressId,
+        //        Birthday = x.Birthday,
+        //        ClubId = x.ClubId,
+        //        EntryMethod = x.EntryMethod,
+        //        FirstName = x.FirstName,
+        //        Gender = x.Gender,
+        //        LastName = x.LastName,
+        //        Notes = x.Notes
+        //    });
+        //}
     }
 }

@@ -136,5 +136,23 @@ namespace TournamentPlanner.Controllers
             }
             return View(clubView);
         }
+
+        [HttpGet]
+        public ActionResult AddPlayersToClub()
+        {
+            var players = clubService.GetPlayersWithoutClub().Select(x => new PlayerViewModel
+            {
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                Birthday = x.Birthday,
+                ClubId = x.ClubId,
+                EntryMethod = x.EntryMethod,
+                Id = x.Id,
+                Gender = x.Gender,
+                AddressId = x.AddressId,
+                Notes = x.Notes
+            });
+            return View(players);
+        }
     }
 }
