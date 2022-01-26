@@ -15,6 +15,7 @@ namespace BLL.Services
         // UNitOFWorks is missed
         IClubRepository clubRepository { get; set; }
         IPlayerRepository playerRepository { get; set; }
+        // Как и где сюда передаються параметры
         public ClubService(IClubRepository repo, IPlayerRepository playerRepository)
         {
             clubRepository = repo;

@@ -49,12 +49,14 @@
             </div>
 
             <div class="col-md-4"> 
-                <label asp-for="ClubId" class="control-label">Club</label>
-                        <select id="drpEmpList" class="form-control" asp-for="ClubId"
-                        asp-items="@(new SelectList(Model.Clubs, "Id", "Title"))"> 
-                            <option value="">--Select--</option>   
-                        </select>  
-                       @* <input type="hidden" asp-for="ClubId" />*@  
+               @* <div class="form-group">*@
+                    <label asp-for="ClubId" class="control-label">Club</label>
+                            <select id="drpEmpList" class="form-control" asp-for="ClubId"
+                            asp-items="@(new SelectList(Model.Clubs, "Id", "Title"))"> 
+                                <option value="">--Select--</option>   
+                            </select>  
+                            <input type="hidden" asp-for="ClubId" />
+                @* </div>*@
              </div> 
     </div>
 </form>

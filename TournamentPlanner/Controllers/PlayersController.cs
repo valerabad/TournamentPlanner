@@ -76,7 +76,7 @@ namespace TournamentPlanner.Controllers
             var clubList = clubService.GetClubs().Select(x => new ClubViewModel
             {
                 Logo = x.Logo,
-                //Id = x.Id,
+                Id = x.Id,
                 Title = x.Title,
                 Description = x.Description
             });

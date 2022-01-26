@@ -109,8 +109,6 @@ namespace TournamentPlanner.Controllers
         {
             clubService.DeletePlayer(playerId, clubId);
             return RedirectToAction(nameof(Edit), new { id = clubId });
-
-            //return RedirectToPage("/Edit?id=" + clubId);
         }
 
         [HttpGet]

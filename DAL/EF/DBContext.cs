@@ -31,7 +31,7 @@ namespace TournamentPlanner.DAL.EF
                 new Player { Id = 5, FirstName = "Sergey", ClubId = 3 }
                 );
 
-            
+
         }
 
         public DbSet<Player> Players { get; set; }
