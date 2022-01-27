@@ -4,7 +4,8 @@
 <h4>Choose players</h4>
 <hr />
 
-@*<form method="post">
+@*1st method*@
+@*<form method="post">  
     @foreach (var item in Model)
     
     {
@@ -12,6 +13,8 @@
     }
     <button action="AddPlayersToClub">Click</button>
 </form>*@
+
+@*2st method*@
 <div class="row">
     <div class="col-md-4">
         <dt>
@@ -39,10 +42,11 @@
                      }
                 </tbody>
             </table>
-            <input type="submit" value="Save" action="AddPlayersToClub" class="btn btn-primary" />
-    </form>
-            
-            <hr />
+             <hr />
+            <input type="submit" value="Add" class="btn btn-primary" />
+            </form>
+            <a asp-action="Index" asp-route-id="1">Return to clubs</a>
+           
         </dd>
     </div>
 </div>
