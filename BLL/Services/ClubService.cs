@@ -98,20 +98,16 @@ namespace BLL.Services
             });
         }
 
-        //public IEnumerable<PlayerDTO> GetPlayers()
-        //{
-        //    return clubRepository.GetPlayers().Select(x => new PlayerDTO
-        //    {
-        //        Id = x.Id,
-        //        AddressId = x.AddressId,
-        //        Birthday = x.Birthday,
-        //        ClubId = x.ClubId,
-        //        EntryMethod = x.EntryMethod,
-        //        FirstName = x.FirstName,
-        //        Gender = x.Gender,
-        //        LastName = x.LastName,
-        //        Notes = x.Notes
-        //    });
-        //}
+        public void AddPlayersToClub(int clubId, int[] playerId)
+        {
+            for (int i =0; i<playerId.Length; i++)
+            {
+                var player = playerRepository.Get(playerId[i]);
+                player.ClubId = clubId;
+                playerRepository.Update(player);
+            }
+            
+            
+        }
     }
 }

@@ -59,7 +59,8 @@
         </form>
     </div>
      <div class="col-md-4">
-         @Html.ActionLink("Add players", "AddPlayersToClub", "Club", null, new {@class="btn btn-outline-primary"})
+         @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |*@
+         @Html.ActionLink("Add players", "AddPlayersToClub", "Club" , new { id=@Model.Id } , new {@class="btn btn-outline-primary"})
           @*<input type="submit" value="Redirect 1" asp-page-handler="Redirect1" />*@
      </div>
 </div>
