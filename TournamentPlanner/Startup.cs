@@ -86,17 +86,8 @@ namespace TournamentPlanner
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                 name: "default",
-                 pattern: "{controller=Club}/{action=AddPlayersToClub}"); //https://localhost:44313/Club/AddPlayersToClub
-                endpoints.MapControllerRoute(
-                   name: "default",
-                   pattern: "{controller=Club}/{action=Create}");
-                endpoints.MapControllerRoute(
-                   name: "default",
-                   pattern: "{controller=Players}/{action=Edit}/{id=1}");
-                endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Players}/{action=Edit}/{id?}");
+                    pattern: "{controller=Players}/{action=Index}/{id?}");
             });
 
          

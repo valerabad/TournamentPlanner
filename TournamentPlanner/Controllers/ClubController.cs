@@ -161,8 +161,6 @@ namespace TournamentPlanner.Controllers
         {
             clubService.AddPlayersToClub(id, AreChecked);
 
-
-
             var players = clubService.GetPlayersWithoutClub().Select(x => new PlayerViewModel
             {
                 FirstName = x.FirstName,
