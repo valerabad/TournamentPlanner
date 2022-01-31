@@ -160,22 +160,6 @@ namespace TournamentPlanner.Controllers
         public ActionResult AddPlayersToClub(int id, int[] AreChecked)
         {
             clubService.AddPlayersToClub(id, AreChecked);
-
-            var players = clubService.GetPlayersWithoutClub().Select(x => new PlayerViewModel
-            {
-                FirstName = x.FirstName,
-                LastName = x.LastName,
-                Birthday = x.Birthday,
-                ClubId = x.ClubId,
-                EntryMethod = x.EntryMethod,
-                Id = x.Id,
-                Gender = x.Gender,
-                AddressId = x.AddressId,
-                Notes = x.Notes
-            });
-
-            ViewData["AreChecked"] = AreChecked;
-            var response = HttpContext.Response.HttpContext.Response;
             return RedirectToAction(nameof(Edit), new { id = id }); 
         }
     }
