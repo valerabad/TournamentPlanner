@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace TournamentPlanner.DAL.Entities
 {
-    public class Player
+    public class Player //: IdentityUser
     {
         public int Id { get; set; }
         [Required]

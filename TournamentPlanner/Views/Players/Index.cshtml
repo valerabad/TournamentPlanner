@@ -1,12 +1,15 @@
-﻿@model IEnumerable<TournamentPlanner.Models.PlayerViewModel>
+﻿@using Microsoft.AspNetCore.Identity
+@using TournamentPlanner.DAL.Entities
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@model IEnumerable<TournamentPlanner.Models.PlayerViewModel>
 
 @{
     ViewData["Title"] = "Index";
 }
 
 <h1>Index</h1>
-
-<p>
+    <p>
     <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
@@ -25,7 +28,11 @@
                 @Html.DisplayFor(modelItem => item.FirstName)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                @if(SignInManager.IsSignedIn(User))
+                {
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
+                }|
+                
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
@@ -33,3 +40,6 @@
 }
     </tbody>
 </table>
+
+
+

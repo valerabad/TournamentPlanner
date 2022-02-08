@@ -21,6 +21,6 @@ namespace BLL.Interfaces
         //public IEnumerable<PlayerDTO> GetPlayers();
         public IEnumerable<PlayerDTO> GetPlayersWithoutClub();
 
-        public void AddPlayersToClub(int clubId, int[] playerId);
+        public void AddPlayersToClub(int clubId, IEnumerable<int> playerId);
     }
 }

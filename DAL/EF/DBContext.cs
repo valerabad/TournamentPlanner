@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using TournamentPlanner.DAL.Entities;
 
 namespace TournamentPlanner.DAL.EF
 {
-    public class DBContext : DbContext
+    public class DBContext : IdentityDbContext<User>
     {
         public DBContext (DbContextOptions<DBContext> options)
             : base(options)
@@ -16,8 +17,10 @@ namespace TournamentPlanner.DAL.EF
             //Database.EnsureCreated();
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder) 
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Club>().HasData(
                 new Club { Id = 1, Title = "Meteor" },
                 new Club { Id = 2, Title = "Dynamo" },

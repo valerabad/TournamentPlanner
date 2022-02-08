@@ -31,12 +31,14 @@ namespace BLL.Services
                Id = x.Id,
                Logo =x.Logo
             });
+
             return clubs;
         }
 
         public ClubDTO GetClub(int? id)
         {
             var foundClub = clubRepository.Get(id);
+
             return new ClubDTO { 
                 Title = foundClub.Title, 
                 Description = foundClub.Description, 
@@ -98,16 +100,14 @@ namespace BLL.Services
             });
         }
 
-        public void AddPlayersToClub(int clubId, int[] playerId)
+        public void AddPlayersToClub(int clubId, IEnumerable<int> playerId)
         {
-            for (int i =0; i<playerId.Length; i++)
+            foreach(var id in playerId)     
             {
-                var player = playerRepository.Get(playerId[i]);
+                var player = playerRepository.Get(id);
                 player.ClubId = clubId;
                 playerRepository.Update(player);
             }
-            
-            
         }
     }
 }

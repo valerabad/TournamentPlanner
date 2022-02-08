@@ -18,6 +18,10 @@ using DAL.Interfaces;
 using TournamentPlanner.DAL.Repositories;
 using System.Text;
 using Microsoft.AspNetCore.Http;
+using TournamentPlanner.DAL.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace TournamentPlanner
 {
@@ -38,10 +42,22 @@ namespace TournamentPlanner
             services.AddRazorPages().AddRazorRuntimeCompilation();
 
             _services = services;
-            services.AddControllersWithViews();
+          
 
             services.AddDbContext<DBContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("DBContext")));
+                options.UseSqlServer(Configuration.GetConnectionString("DBContext")));
+
+            //services.AddDbContext<DBContext>(options =>
+            //        options.UseSqlServer(Configuration.GetConnectionString("DBContext")));
+
+            services.AddControllersWithViews();
+            //Identity
+            #region add Identity
+
+            services.AddIdentity<User, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<DBContext>();
+
+            #endregion
 
             services.AddTransient<IPlayerService, PlayerService>();
             services.AddTransient<IClubService, ClubService>();
@@ -81,6 +97,7 @@ namespace TournamentPlanner
 
             app.UseRouting();
 
+            //app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
