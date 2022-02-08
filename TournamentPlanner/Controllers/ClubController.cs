@@ -5,6 +5,7 @@ using System.Linq;
 using BLL.Interfaces;
 using System.Threading.Tasks;
 using BLL.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TournamentPlanner.Controllers
 {
@@ -17,6 +18,7 @@ namespace TournamentPlanner.Controllers
             this.clubService = clubService;
             this.playerService = playerService;
         }
+        
         public IActionResult Index()
         {
             var clubs = clubService.GetClubs().Select(x => new ClubViewModel

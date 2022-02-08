@@ -4,6 +4,7 @@ using TournamentPlanner.DAL.Entities;
 using System.Linq;
 using System.Threading.Tasks;
 using TournamentPlanner.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TournamentPlanner.Controllers
 {
@@ -15,7 +16,7 @@ namespace TournamentPlanner.Controllers
         {
             _userManager = userManager;
         }
-
+        [Authorize(Roles = "testrole")]
         public IActionResult Index() => View(_userManager.Users.ToList());
 
         [HttpPost]
