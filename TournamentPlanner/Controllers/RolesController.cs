@@ -24,29 +24,10 @@ namespace TournamentPlanner.Controllers
 
         public IActionResult UserList()
         {
-           return View(_userManager.Users.ToList());
+            return View(_userManager.Users.ToList());
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Edit(string userId)
-        {
-            User user = await _userManager.FindByIdAsync(userId);
-            if (user != null)
-            {
-                var userRoles = await _userManager.GetRolesAsync(user);
-                var allRoles = _roleManager.Roles.ToList();
-                RoleViewModel model = new RoleViewModel
-                {
-                    UserId = user.Id,
-                    UserEmail = user.Email,
-                    UserRoles = userRoles,
-                    AllRoles = allRoles
-                };
-                return View(model);
-            }
 
-            return NotFound();
-        }
         [HttpGet]
         public IActionResult Create() => View();
 
@@ -69,6 +50,52 @@ namespace TournamentPlanner.Controllers
                 }
             }
             return View(name);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(string userId)
+        {
+            User user = await _userManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                var userRoles = await _userManager.GetRolesAsync(user);
+                var allRoles = _roleManager.Roles.ToList();
+                RoleViewModel model = new RoleViewModel
+                {
+                    UserId = user.Id,
+                    UserEmail = user.Email,
+                    UserRoles = userRoles,
+                    AllRoles = allRoles
+                };
+                return View(model);
+            }
+
+            return NotFound();
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(RoleViewModel model, string[] roles)
+        {
+            User currentUser = await _userManager.FindByIdAsync(model.UserId);
+            if (currentUser != null)
+            {
+                // get all roles for user
+                var userRoles = await _userManager.GetRolesAsync(currentUser);
+                // get all roles
+                var allRoles = _roleManager.Roles.ToList();
+                // get added roles
+                var addedRoles = roles.Except(userRoles);
+                // get deleted roles
+                var removedRoles = userRoles.Except(roles);
+
+                await _userManager.AddToRolesAsync(currentUser, addedRoles);
+
+                await _userManager.RemoveFromRolesAsync(currentUser, removedRoles);
+
+                return RedirectToAction("UserList");
+            }
+            return NotFound();
         }
     }
 }
