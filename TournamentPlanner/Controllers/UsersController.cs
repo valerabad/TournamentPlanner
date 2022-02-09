@@ -16,7 +16,7 @@ namespace TournamentPlanner.Controllers
         {
             _userManager = userManager;
         }
-        [Authorize(Roles = "testrole")]
+        [Authorize(Roles = "admin")]
         public IActionResult Index() => View(_userManager.Users.ToList());
 
         [HttpPost]
