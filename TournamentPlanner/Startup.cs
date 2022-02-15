@@ -47,14 +47,11 @@ namespace TournamentPlanner
             services.AddDbContext<DBContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DBContext")));
 
-            //services.AddDbContext<DBContext>(options =>
-            //        options.UseSqlServer(Configuration.GetConnectionString("DBContext")));
-
             services.AddControllersWithViews();
             //Identity
             #region add Identity
 
-            services.AddIdentity<User, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddIdentity<User, IdentityRole>().AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<DBContext>();
 
             #endregion
