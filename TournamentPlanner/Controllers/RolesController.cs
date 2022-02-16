@@ -16,7 +16,6 @@ namespace TournamentPlanner.Controllers
             _roleManager = roleManager;
             _userManager = userManager;
         }
-
         public IActionResult Index()
         {
             return View(_roleManager.Roles.ToList());
@@ -90,7 +89,6 @@ namespace TournamentPlanner.Controllers
                 var removedRoles = userRoles.Except(roles);
 
                 await _userManager.AddToRolesAsync(currentUser, addedRoles);
-
                 await _userManager.RemoveFromRolesAsync(currentUser, removedRoles);
 
                 return RedirectToAction("UserList");

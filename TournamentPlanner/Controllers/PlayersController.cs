@@ -213,15 +213,6 @@ namespace TournamentPlanner.Controllers
                 return NotFound();
             }
 
-            //ClubDTO clubDTO = clubService.GetClub(player.ClubId);
-            //ClubViewModel clubViewModel = new ClubViewModel()
-            //{
-            //    Id = clubDTO.Id,
-            //    Logo = clubDTO.Logo,
-            //    Description = clubDTO.Description,
-            //    Title = clubDTO.Title
-            //};
-
             PlayerViewModel playerViewModel = new PlayerViewModel()
             {
                 Id = player.Id,
@@ -248,9 +239,5 @@ namespace TournamentPlanner.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        //    private bool PlayerExists(int id)
-        //    {
-        //        return playerService.Player.Any(e => e.Id == id);
-        //    }
     }
 }

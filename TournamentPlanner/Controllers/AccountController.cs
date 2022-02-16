@@ -42,7 +42,6 @@ namespace TournamentPlanner.Controllers
                 {
                     foreach (var error in result.Errors)
                     {
-                        // добавляем к состоянию модели все возникшие при добавлении ошибки
                         ModelState.AddModelError(string.Empty, error.Description);
                     }
                 }
@@ -79,7 +78,7 @@ namespace TournamentPlanner.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Неправильный логин и (или) пароль");
+                    ModelState.AddModelError("", "Incorrect login or password");
                 }
             }
             return View(model);
