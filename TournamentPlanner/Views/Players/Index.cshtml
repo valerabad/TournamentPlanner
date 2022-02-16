@@ -13,19 +13,22 @@
     <p>@User.Identity.Name</p>
  
     <form method="post" asp-controller="Account" asp-action="Logout">
-        <input type="submit" value="Cancel" />
+        <input type="submit" value="Log out" />
     </form>
 }
 else
 {
-    <a asp-controller="Account" asp-action="Login">Вход</a>
-    <a asp-controller="Account" asp-action="Register">Регистрация</a>
+    <a asp-controller="Account" asp-action="Login">Log in</a>
+    <a asp-controller="Account" asp-action="Register">Sign in</a>
 }
 
-<h1>Index</h1>
+<h1>List of players</h1>
+@*@if (User.IsInRole("admin"))*@
+{
     <p>
-    <a asp-action="Create">Create New</a>
-</p>
+        <a class="btn btn-outline-primary" href="/Players/Create">Create player</a>
+    </p>
+}
 <table class="table">
     <thead>
         <tr>
@@ -42,10 +45,11 @@ else
                 @Html.DisplayFor(modelItem => item.FirstName)
             </td>
             <td>
-                @if(SignInManager.IsSignedIn(User))
+                @*@if(SignInManager.IsSignedIn(User))*@
+                @if (User.IsInRole("admin"))
                 {
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
-                }|
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit |</a>
+                }
                 
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>

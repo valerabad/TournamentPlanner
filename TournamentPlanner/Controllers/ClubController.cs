@@ -121,7 +121,7 @@ namespace TournamentPlanner.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken] // ?
+        [ValidateAntiForgeryToken]
         public IActionResult Create(ClubViewModel clubView)
         {
             if (ModelState.IsValid)

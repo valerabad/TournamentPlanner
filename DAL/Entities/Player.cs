@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TournamentPlanner.DAL.Entities
 {
-    public class Player //: IdentityUser
+    public class Player //: User
     {
         public int Id { get; set; }
         [Required]
@@ -12,8 +12,7 @@ namespace TournamentPlanner.DAL.Entities
         public string LastName { get; set; }
         public string Gender { get; set; }
         [DataType(DataType.Date)]
-        public DateTime? Birthday { get; set; } // nullable
-        //public DateTime Birthday { get; set; } // not null
+        public DateTime? Birthday { get; set; } 
         public string Notes { get; set; }
         public int AddressId { get; set; }
         public string EntryMethod { get; set; }
