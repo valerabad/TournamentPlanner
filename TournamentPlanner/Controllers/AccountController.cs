@@ -89,7 +89,7 @@ namespace TournamentPlanner.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
-            // удаляем аутентификационные куки
+            // remove cooky authnetification
             await _signInManager.SignOutAsync();
             return RedirectToAction("Register", "Account");
         }
