@@ -23,7 +23,7 @@ else
 }
 
 <h1>List of players</h1>
-@*@if (User.IsInRole("admin"))*@
+@if (User.IsInRole("admin"))
 {
     <p>
         <a class="btn btn-outline-primary" href="/Players/Create">Create player</a>
@@ -46,13 +46,12 @@ else
             </td>
             <td>
                 @*@if(SignInManager.IsSignedIn(User))*@
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
                 @if (User.IsInRole("admin"))
                 {
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit |</a>
-                }
-                
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id">| Edit |</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                }   
             </td>
         </tr>
 }

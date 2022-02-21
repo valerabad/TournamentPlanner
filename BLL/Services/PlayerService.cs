@@ -77,7 +77,8 @@ namespace BLL.Services
                 Gender = playerDTO.Gender,
                 EntryMethod = playerDTO.EntryMethod,
                 LastName = playerDTO.LastName,
-                Notes = playerDTO.Notes
+                Notes = playerDTO.Notes,
+                UserId = playerDTO.UserId
             };
             Database.PlayersRepository.Create(player);
         }

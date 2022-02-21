@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using TournamentPlanner.DAL.Entities;
 using TournamentPlanner.Models;
@@ -36,7 +38,7 @@ namespace TournamentPlanner.Controllers
                 {
                     // set cookies
                     await _signInManager.SignInAsync(user, false);
-                    return RedirectToAction("Index", "Players");
+                    return RedirectToAction("Create", "Players");
                 }
                 else
                 {
@@ -92,5 +94,20 @@ namespace TournamentPlanner.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Register", "Account");
         }
+
+        //private async Task Authenticate(User user)
+        //{
+        //    // создаем один claim
+        //    var claims = new List<Claim>
+        //    {
+        //        new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
+        //        new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role?.Name)
+        //    };
+        //    // создаем объект ClaimsIdentity
+        //    ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType,
+        //        ClaimsIdentity.DefaultRoleClaimType);
+        //    // установка аутентификационных куки
+        //    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
+        //}
     }
 }

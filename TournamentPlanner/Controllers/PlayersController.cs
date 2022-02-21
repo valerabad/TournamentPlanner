@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TournamentPlanner.Models;
 using BLL.DTO;
+using Microsoft.AspNetCore.Identity;
 
 namespace TournamentPlanner.Controllers
 {
@@ -15,11 +16,16 @@ namespace TournamentPlanner.Controllers
     {
         private readonly IPlayerService playerService;
         private readonly IClubService clubService;
+        private readonly UserManager<DAL.Entities.User> _userManager;
 
-        public PlayersController(IPlayerService playerService, IClubService clubService)
+        public PlayersController(
+            IPlayerService playerService, 
+            IClubService clubService,
+            UserManager<DAL.Entities.User> _userManager)
         {
             this.playerService = playerService;
             this.clubService = clubService;
+            this._userManager = _userManager;
         }
 
         // GET: Players
@@ -94,6 +100,11 @@ namespace TournamentPlanner.Controllers
         [ValidateAntiForgeryToken] // ?
         public async Task<IActionResult> Create(PlayerViewModel player)
         {
+            var user = await _userManager.FindByEmailAsync(User.Identity.Name);
+            var roles = await _userManager.GetRolesAsync(user);
+            if (!roles.Contains("player"))
+                await _userManager.AddToRoleAsync(user, "player");
+            
             if (ModelState.IsValid)
             {
                 PlayerDTO playerDTO = new PlayerDTO()
@@ -106,7 +117,9 @@ namespace TournamentPlanner.Controllers
                     Gender = player.Gender,
                     LastName = player.LastName,
                     Notes = player.Notes,
-                    ClubId = player.ClubId
+                    ClubId = player.ClubId,
+                    UserId = user.Id,
+                  
                 };
                
                 playerService.Create(playerDTO);

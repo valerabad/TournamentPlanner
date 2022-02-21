@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TournamentPlanner.DAL.EF;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20220220105656_UserIdAdd")]
+    partial class UserIdAdd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -220,14 +222,17 @@ namespace DAL.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId1")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ClubId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Players");
 
@@ -237,35 +242,40 @@ namespace DAL.Migrations
                             Id = 1,
                             AddressId = 0,
                             ClubId = 1,
-                            FirstName = "Valeriy"
+                            FirstName = "Valeriy",
+                            UserId = 0
                         },
                         new
                         {
                             Id = 2,
                             AddressId = 0,
                             ClubId = 1,
-                            FirstName = "Anton"
+                            FirstName = "Anton",
+                            UserId = 0
                         },
                         new
                         {
                             Id = 3,
                             AddressId = 0,
                             ClubId = 2,
-                            FirstName = "Elena"
+                            FirstName = "Elena",
+                            UserId = 0
                         },
                         new
                         {
                             Id = 4,
                             AddressId = 0,
                             ClubId = 3,
-                            FirstName = "Kateryna"
+                            FirstName = "Kateryna",
+                            UserId = 0
                         },
                         new
                         {
                             Id = 5,
                             AddressId = 0,
                             ClubId = 3,
-                            FirstName = "Sergey"
+                            FirstName = "Sergey",
+                            UserId = 0
                         });
                 });
 
@@ -396,7 +406,7 @@ namespace DAL.Migrations
 
                     b.HasOne("TournamentPlanner.DAL.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId1");
 
                     b.Navigation("Club");
 
