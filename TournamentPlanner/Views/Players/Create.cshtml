@@ -8,6 +8,8 @@
 
 <h4>Player</h4>
 <hr />
+@if(User.Identity.IsAuthenticated)
+{
 <form asp-action="Create">
     <div class="row">
      <div class="col-md-4">
@@ -49,18 +51,21 @@
             </div>
 
             <div class="col-md-4"> 
-                <label asp-for="ClubId" class="control-label">Club</label>
-                        <select id="drpEmpList" class="form-control" asp-for="ClubId"
-                        asp-items="@(new SelectList(Model.Clubs, "Id", "Title"))"> 
-                            <option value="">--Select--</option>   
-                        </select>  
-                       @* <input type="hidden" asp-for="ClubId" />*@  
+               @* <div class="form-group">*@
+                    <label asp-for="ClubId" class="control-label">Club</label>
+                            <select id="drpEmpList" class="form-control" asp-for="ClubId"
+                            asp-items="@(new SelectList(Model.Clubs, "Id", "Title"))"> 
+                                <option value="">--Select--</option>   
+                            </select>  
+                            <input type="hidden" asp-for="ClubId" />
+                @* </div>*@
              </div> 
     </div>
 </form>
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+}
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

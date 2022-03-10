@@ -1,0 +1,19 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <form asp-action="BatchPlayerUpload" asp-controller="Players" method="post" id="create-form" enctype="multipart/form-data">
+            <div class="form-group">
+                <label class="control-label">
+                        Upload File:
+                </label>
+                <input id="batchPlayers" name="batchPlayers" class="form-control" type="file" tabindex="14">
+                <span class="form-text text-muted">Allowed file types:  xlsx, xls.</span>
+            </div>
+            <div class="card-footer">
+                <center>
+                    <button type="submit" class="btn btn-primary mr-2">Upload players</button>
+                    <a asp-action="Index" asp-controller="Players" class="btn btn-secondary">Cancel</a>
+                </center>
+            </div>
+        </form>
+    </div>
+</div>

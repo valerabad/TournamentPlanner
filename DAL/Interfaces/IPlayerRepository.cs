@@ -17,5 +17,6 @@ namespace DAL.Interfaces
         void Create(Player item);
         void Update(Player item);   
         void Delete(int id);
+        void UpdateClub(int? playerId, int? clubId);
     }
 }

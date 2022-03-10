@@ -10,8 +10,8 @@ using TournamentPlanner.DAL.EF;
 namespace DAL.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20220112171310_ClubMigration")]
-    partial class ClubMigration
+    [Migration("20220126170333_InitMigration")]
+    partial class InitMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace DAL.Migrations
                 .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("DAL.Entities.Club", b =>
+            modelBuilder.Entity("TournamentPlanner.DAL.Entities.Club", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -40,6 +40,23 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Clubs");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Title = "Meteor"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Title = "Dynamo"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Title = "Wave"
+                        });
                 });
 
             modelBuilder.Entity("TournamentPlanner.DAL.Entities.Player", b =>
@@ -52,10 +69,10 @@ namespace DAL.Migrations
                     b.Property<int>("AddressId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Birthday")
+                    b.Property<DateTime?>("Birthday")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ClubId")
+                    b.Property<int?>("ClubId")
                         .HasColumnType("int");
 
                     b.Property<string>("EntryMethod")
@@ -74,12 +91,62 @@ namespace DAL.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Test")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
+                    b.HasIndex("ClubId");
+
                     b.ToTable("Players");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AddressId = 0,
+                            ClubId = 1,
+                            FirstName = "Valeriy"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AddressId = 0,
+                            ClubId = 1,
+                            FirstName = "Anton"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AddressId = 0,
+                            ClubId = 2,
+                            FirstName = "Elena"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AddressId = 0,
+                            ClubId = 3,
+                            FirstName = "Kateryna"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            AddressId = 0,
+                            ClubId = 3,
+                            FirstName = "Sergey"
+                        });
+                });
+
+            modelBuilder.Entity("TournamentPlanner.DAL.Entities.Player", b =>
+                {
+                    b.HasOne("TournamentPlanner.DAL.Entities.Club", "Club")
+                        .WithMany("Players")
+                        .HasForeignKey("ClubId");
+
+                    b.Navigation("Club");
+                });
+
+            modelBuilder.Entity("TournamentPlanner.DAL.Entities.Club", b =>
+                {
+                    b.Navigation("Players");
                 });
 #pragma warning restore 612, 618
         }

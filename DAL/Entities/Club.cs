@@ -13,11 +13,11 @@ namespace TournamentPlanner.DAL.Entities
         public string Description { get; set; }
         public string Logo { get; set; }
 
-        public virtual ICollection<Player> Clubs { get; set; }
+        public virtual ICollection<Player> Players { get; set; }
 
         public Club()
         {
-            Clubs = new List<Player>();
+            Players = new List<Player>();
         }
     }
 }

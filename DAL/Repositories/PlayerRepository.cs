@@ -43,5 +43,15 @@ namespace TournamentPlanner.DAL.Repositories
             _context.Remove(playerForRemove);
             _context.SaveChanges();
         }
+
+        public void UpdateClub(int? playerId, int? clubId)
+        {
+            if (playerId != null)
+            {
+                Get((int)playerId).ClubId = clubId;
+                _context.SaveChanges();
+            }
+
+        }
     }
 }
