@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace TournamentPlanner.Controllers
 {
-    [Authorize (Roles = "admin")]
+    //[Authorize (Roles = "admin")] //doesn't work
     public class UsersController : Controller
     {
         private readonly UserManager<User> _userManager;

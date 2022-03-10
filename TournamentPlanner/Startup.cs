@@ -53,6 +53,7 @@ namespace TournamentPlanner
 
             services.AddTransient<IPlayerService, PlayerService>();
             services.AddTransient<IClubService, ClubService>();
+            services.AddTransient<IExcelService, ExcelService>();
 
             services.AddTransient<IUnitOfWork, EFUnitOfWork>();
 

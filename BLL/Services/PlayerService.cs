@@ -104,9 +104,6 @@ namespace BLL.Services
         public void Delete(int? id)
         {
             Database.PlayersRepository.Delete(id.Value);
-
         }
-
-
     }
 }

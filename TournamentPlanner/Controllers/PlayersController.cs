@@ -21,16 +21,19 @@ namespace TournamentPlanner.Controllers
     {
         private readonly IPlayerService playerService;
         private readonly IClubService clubService;
+        private readonly IExcelService excelService;
         private readonly UserManager<DAL.Entities.User> _userManager;
 
         public PlayersController(
             IPlayerService playerService, 
             IClubService clubService,
+            IExcelService excelService,
             UserManager<DAL.Entities.User> _userManager)
         {
             this.playerService = playerService;
             this.clubService = clubService;
             this._userManager = _userManager;
+            this.excelService = excelService;
         }
 
         // GET: Players
@@ -50,7 +53,7 @@ namespace TournamentPlanner.Controllers
             return View(players);
         }
 
-        // GET: Players/Details/5
+        
         public async Task<IActionResult> Details(int? id) // asynk await
         {
             if (id == null)
@@ -79,8 +82,7 @@ namespace TournamentPlanner.Controllers
 
             return View(playerViewModel);
         }
-
-        //    // GET: Players/Create
+        
         public IActionResult Create()
         {
             // We have not use DAL here, but just for test 
@@ -100,9 +102,9 @@ namespace TournamentPlanner.Controllers
             return View(playerViewModel);
         }
 
-        // POST: Players/Create
+
         [HttpPost]
-        [ValidateAntiForgeryToken] // ?
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(PlayerViewModel player)
         {
             var user = await _userManager.FindByEmailAsync(User.Identity.Name);
@@ -259,56 +261,10 @@ namespace TournamentPlanner.Controllers
 
         public IActionResult ExportToExcel()
         {
+            string workSheetName = "Players";
             var players = playerService.GetPlayers();
-
-            var stream = new MemoryStream();
-            using (var xlPackage = new ExcelPackage(stream))
-            {
-                var worksheet = xlPackage.Workbook.Worksheets.Add("Players");
-                var namedStyle = xlPackage.Workbook.Styles.CreateNamedStyle("HyperLink");
-                namedStyle.Style.Font.UnderLine = true;
-                namedStyle.Style.Font.Color.SetColor(Color.Blue);
-                const int startRow = 5;
-                var row = startRow;
-
-                //Create Headers and format them
-                worksheet.Cells["A1"].Value = "Sample";
-                using (var r = worksheet.Cells["A1:C1"])
-                {
-                    r.Merge = true;
-                    r.Style.Font.Color.SetColor(Color.White);
-                    r.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.CenterContinuous;
-                    r.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
-                    r.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(23, 55, 93));
-                }
-
-                worksheet.Cells["A4"].Value = "Last name";
-                worksheet.Cells["B4"].Value = "First name";
-                worksheet.Cells["C4"].Value = "Birthday";
-                worksheet.Cells["A4:C4"].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                worksheet.Cells["A4:C4"].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(184, 204, 228));
-                worksheet.Cells["A4:C4"].Style.Font.Bold = true;
-
-                row = 5;
-                foreach (var player in players)
-                {
-                    worksheet.Cells[row, 1].Value = player.LastName;
-                    worksheet.Cells[row, 2].Value = player.FirstName;
-                    worksheet.Cells[row, 3].Value = player.Birthday;
-
-                    row++;
-                }
-
-                // set some core property values
-                xlPackage.Workbook.Properties.Title = "Player List";
-                xlPackage.Workbook.Properties.Author = "noname";
-                xlPackage.Workbook.Properties.Subject = "Player List";
-                // save the new spreadsheet
-                xlPackage.Save();
-                // Response.Clear();
-            }
-            stream.Position = 0;
-            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "players.xlsx");
+            var outputStream = excelService.ExportToExcel(players, workSheetName);
+            return File(outputStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"{workSheetName}.xlsx");
         }
 
         [HttpGet]
@@ -319,75 +275,18 @@ namespace TournamentPlanner.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult BatchPlayerUpload(IFormFile batchUsers)
+        public IActionResult BatchPlayerUpload(IFormFile batchPlayers)
         {
 
             if (ModelState.IsValid)
             {
-                if (batchUsers?.Length > 0)
+                if (batchPlayers?.Length > 0)
                 {
-                    var stream = batchUsers.OpenReadStream();
-                    List<PlayerViewModel> models = new List<PlayerViewModel>();
-                    try
-                    {
-                        using (var package = new ExcelPackage(stream))
-                        {
-                            var worksheet = package.Workbook.Worksheets.First();//package.Workbook.Worksheets[0];
-                            var rowCount = worksheet.Dimension.Rows;
-
-                            for (var row = 2; row <= rowCount; row++)
-                            {
-                                try
-                                {
-
-                                    var firstName = worksheet.Cells[row, 1].Value?.ToString();
-                                    var lastName = worksheet.Cells[row, 2].Value?.ToString();
-                                    var birthDay = (DateTime?)worksheet.Cells[row, 3].Value; // ?? (DateTime)worksheet.Cells[row, 3].Value;
-
-                                    var playerViewModel = new PlayerViewModel()
-                                    {
-                                        FirstName = firstName,
-                                        LastName = lastName,
-                                        Birthday = birthDay
-                                    };
-
-                                    models.Add(playerViewModel);
-
-                                    if (ModelState.IsValid)
-                                    {
-                                        PlayerDTO playerDTO = new PlayerDTO()
-                                        {
-                                            //Id = playerViewModel.Id,
-                                            FirstName = playerViewModel.FirstName,
-                                            AddressId = playerViewModel.AddressId,
-                                            Birthday = playerViewModel.Birthday,
-                                            EntryMethod = playerViewModel.EntryMethod,
-                                            Gender = playerViewModel.Gender,
-                                            LastName = playerViewModel.LastName,
-                                            Notes = playerViewModel.Notes,
-                                            ClubId = playerViewModel.ClubId,
-                                        };
-
-                                        playerService.Create(playerDTO);
-
-                                    }
-                                }
-                                catch (Exception ex)
-                                {
-                                    Console.WriteLine("Something went wrong");
-                                }
-                            }
-                        }
-                        return RedirectToAction(nameof(Index));
-                    }
-                    catch (Exception e)
-                    {
-                        return View();
-                    }
+                    var stream = batchPlayers.OpenReadStream();
+                    excelService.ImportFromExcel(stream);
                 }
             }
-
-            return View();
+            return RedirectToAction(nameof(Index));
         }
     }
 }
