@@ -17,18 +17,35 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Players" asp-action="Index">Players</a>
+                    <ul class="navbar-nav flex-grow-1 ">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-info" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                               Entities
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Players" asp-action="Index">Players</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Club" asp-action="Index">Clubs</a>
+                            </div>
                         </li>
-                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Club" asp-action="Index">Clubs</a>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-info" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                               Identity
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                               <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Users</a>
+                               <a class="nav-link text-dark" asp-area="" asp-controller="Roles" asp-action="Index">Roles</a>
+                            </div>
                         </li>
-                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Users</a>
-                        </li>
-                          <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Roles" asp-action="Index">Roles</a>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-info" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                               Excel
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Players" asp-action="BatchPlayerUpload">Import from file</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Players" style="visibility:unset" asp-action="ExportToExcel">Export</a>
+                            </div>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />

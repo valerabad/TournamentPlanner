@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TournamentPlanner.DAL.EF;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20220220110306_UserIdTypeChnaged")]
+    partial class UserIdTypeChnaged
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -221,11 +223,13 @@ namespace DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ClubId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Players");
 
@@ -392,7 +396,13 @@ namespace DAL.Migrations
                         .WithMany("Players")
                         .HasForeignKey("ClubId");
 
+                    b.HasOne("TournamentPlanner.DAL.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
                     b.Navigation("Club");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("TournamentPlanner.DAL.Entities.Club", b =>

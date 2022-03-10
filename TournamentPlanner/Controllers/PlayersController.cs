@@ -8,6 +8,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TournamentPlanner.Models;
 using BLL.DTO;
+using Microsoft.AspNetCore.Identity;
+using System.IO;
+using OfficeOpenXml;
+using System.Drawing;
+using OfficeOpenXml.Style;
+using Microsoft.AspNetCore.Http;
 
 namespace TournamentPlanner.Controllers
 {
@@ -15,11 +21,19 @@ namespace TournamentPlanner.Controllers
     {
         private readonly IPlayerService playerService;
         private readonly IClubService clubService;
+        private readonly IExcelService excelService;
+        private readonly UserManager<DAL.Entities.User> _userManager;
 
-        public PlayersController(IPlayerService playerService, IClubService clubService)
+        public PlayersController(
+            IPlayerService playerService, 
+            IClubService clubService,
+            IExcelService excelService,
+            UserManager<DAL.Entities.User> _userManager)
         {
             this.playerService = playerService;
             this.clubService = clubService;
+            this._userManager = _userManager;
+            this.excelService = excelService;
         }
 
         // GET: Players
@@ -39,7 +53,7 @@ namespace TournamentPlanner.Controllers
             return View(players);
         }
 
-        // GET: Players/Details/5
+        
         public async Task<IActionResult> Details(int? id) // asynk await
         {
             if (id == null)
@@ -68,8 +82,7 @@ namespace TournamentPlanner.Controllers
 
             return View(playerViewModel);
         }
-
-        //    // GET: Players/Create
+        
         public IActionResult Create()
         {
             // We have not use DAL here, but just for test 
@@ -89,11 +102,16 @@ namespace TournamentPlanner.Controllers
             return View(playerViewModel);
         }
 
-        // POST: Players/Create
+
         [HttpPost]
-        [ValidateAntiForgeryToken] // ?
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(PlayerViewModel player)
         {
+            var user = await _userManager.FindByEmailAsync(User.Identity.Name);
+            var roles = await _userManager.GetRolesAsync(user);
+            if (!roles.Contains("player"))
+                await _userManager.AddToRoleAsync(user, "player");
+            
             if (ModelState.IsValid)
             {
                 PlayerDTO playerDTO = new PlayerDTO()
@@ -106,7 +124,9 @@ namespace TournamentPlanner.Controllers
                     Gender = player.Gender,
                     LastName = player.LastName,
                     Notes = player.Notes,
-                    ClubId = player.ClubId
+                    ClubId = player.ClubId,
+                    UserId = user.Id,
+                  
                 };
                
                 playerService.Create(playerDTO);
@@ -239,5 +259,34 @@ namespace TournamentPlanner.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public IActionResult ExportToExcel()
+        {
+            string workSheetName = "Players";
+            var players = playerService.GetPlayers();
+            var outputStream = excelService.ExportToExcel(players, workSheetName);
+            return File(outputStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"{workSheetName}.xlsx");
+        }
+
+        [HttpGet]
+        public IActionResult BatchPlayerUpload()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult BatchPlayerUpload(IFormFile batchPlayers)
+        {
+
+            if (ModelState.IsValid)
+            {
+                if (batchPlayers?.Length > 0)
+                {
+                    var stream = batchPlayers.OpenReadStream();
+                    excelService.ImportFromExcel(stream);
+                }
+            }
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

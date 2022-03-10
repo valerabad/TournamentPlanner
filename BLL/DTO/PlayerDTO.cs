@@ -21,5 +21,6 @@ namespace BLL.DTO
             public int AddressId { get; set; }
             public int? ClubId { get; set; }
             public string EntryMethod { get; set; }
+            public string UserId { get; set; }
     }
 }

@@ -53,6 +53,7 @@ namespace TournamentPlanner
 
             services.AddTransient<IPlayerService, PlayerService>();
             services.AddTransient<IClubService, ClubService>();
+            services.AddTransient<IExcelService, ExcelService>();
 
             services.AddTransient<IUnitOfWork, EFUnitOfWork>();
 
@@ -84,7 +85,7 @@ namespace TournamentPlanner
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Club}/{action=Index}/{id?}");
+                    pattern: "{controller=Players}/{action=Create}/{id?}");
             });
         }
     }
