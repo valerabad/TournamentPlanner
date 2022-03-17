@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace TournamentPlanner.Controllers
 {
-    //[Authorize (Roles = "admin")] //doesn't work
+    [Authorize (Roles = "admin")]
     public class UsersController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -20,11 +20,12 @@ namespace TournamentPlanner.Controllers
         
         public IActionResult Index()
         {
-           var isInrole = User.IsInRole("admin");
-            if (isInrole)
-                return View(_userManager.Users.ToList());
-            else
-                return RedirectToAction("Login", "Account");
+            //var isInrole = User.IsInRole("admin");
+            //if (isInrole)
+            //    return View(_userManager.Users.ToList());
+            //else
+            //    return RedirectToAction("Login", "Account");
+            return View(_userManager.Users.ToList());
         }
 
         [HttpPost]

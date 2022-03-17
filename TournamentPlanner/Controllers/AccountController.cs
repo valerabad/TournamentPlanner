@@ -38,7 +38,8 @@ namespace TournamentPlanner.Controllers
                 {
                     // set cookies
                     await _signInManager.SignInAsync(user, false);
-                    return RedirectToAction("Create", "Players");
+                    await _userManager.AddToRoleAsync(user, "guest");
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
@@ -75,7 +76,7 @@ namespace TournamentPlanner.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Players");
+                        return RedirectToAction("Index", "Home");
                     }
                 }
                 else

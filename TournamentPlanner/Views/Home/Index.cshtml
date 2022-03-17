@@ -1,0 +1,33 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@{
+    ViewData["Title"] = "Start page";
+}
+
+@if(User.Identity.IsAuthenticated)
+{
+    <p>Welcome @User.Identity.Name</p>
+    @if (!User.IsInRole("admin"))
+    {
+        @if (!User.IsInRole("player"))
+        {
+            <a asp-controller="Players" asp-action="Create">Become a player</a>
+        }
+        <br/>
+        <a asp-controller="Players" asp-action="Index">Continue as guest</a>
+    }
+
+    <form method="post" asp-controller="Account" asp-action="Logout">
+        <input type="submit" value="Log out" />
+    </form>
+}
+else
+{
+    <h1>Welcome to Tournament planner App</h1>
+    <p>
+        At first please <a asp-controller="Account" asp-action="Login">Log in</a> or 
+                        <a asp-controller="Account" asp-action="Register">Sign in</a>
+    </p>
+   @* <p>Continue as guest</p>*@
+    
+}
