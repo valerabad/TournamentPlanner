@@ -17,7 +17,7 @@ namespace TournamentPlanner
             if (await roleManager.FindByNameAsync("player") == null)
             {
                 await roleManager.CreateAsync(new IdentityRole("player"));
-            }
+            }   
             if (await roleManager.FindByNameAsync("guest") == null)
             {
                 await roleManager.CreateAsync(new IdentityRole("guest"));

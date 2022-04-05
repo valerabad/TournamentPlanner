@@ -1,9 +1,9 @@
 ﻿namespace TournamentPlanner.Models
 {
-    public class EditUserViewModel
+    public class ChangePasswordViewModel
     {
         public string Id { get; set; }
         public string Email { get; set; }
-        public int Year { get; set; }
+        public string NewPassword { get; set; }
     }
 }
