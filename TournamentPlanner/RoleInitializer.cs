@@ -32,6 +32,12 @@ namespace TournamentPlanner
                     await userManager.AddToRoleAsync(admin, "admin");
                 }
             }
+            
+            User adminUser = await userManager.FindByEmailAsync(adminEmail);
+            if (!await userManager.IsInRoleAsync(adminUser, "admin"))
+            {
+                await userManager.AddToRoleAsync(adminUser, "admin");
+            }
         }
     }
 }

@@ -120,19 +120,13 @@ namespace TournamentPlanner.Controllers
             if (ModelState.IsValid)
             {
                 User user = await _userManager.FindByIdAsync(model.Id);
+
                 if (user != null)
                 {
-                    var _passwordValidator =
-                        HttpContext.RequestServices.GetService(typeof(IPasswordValidator<User>)) as IPasswordValidator<User>;
-                    var _passwordHasher =
-                        HttpContext.RequestServices.GetService(typeof(IPasswordHasher<User>)) as IPasswordHasher<User>;
-
                     IdentityResult result =
-                        await _passwordValidator.ValidateAsync(_userManager, user, model.NewPassword);
+                        await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
                     if (result.Succeeded)
                     {
-                        user.PasswordHash = _passwordHasher.HashPassword(user, model.NewPassword);
-                        await _userManager.UpdateAsync(user);
                         return RedirectToAction("Index");
                     }
                     else
@@ -145,8 +139,38 @@ namespace TournamentPlanner.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "User not found");
+                    ModelState.AddModelError(string.Empty, "User wasn't found");
                 }
+
+                #region 2nd method
+                //if (user != null)
+                //{
+                //    var _passwordValidator =
+                //        HttpContext.RequestServices.GetService(typeof(IPasswordValidator<User>)) as IPasswordValidator<User>;
+                //    var _passwordHasher =
+                //        HttpContext.RequestServices.GetService(typeof(IPasswordHasher<User>)) as IPasswordHasher<User>;
+
+                //    IdentityResult result =
+                //        await _passwordValidator.ValidateAsync(_userManager, user, model.NewPassword);
+                //    if (result.Succeeded)
+                //    {
+                //        user.PasswordHash = _passwordHasher.HashPassword(user, model.NewPassword);
+                //        await _userManager.UpdateAsync(user);
+                //        return RedirectToAction("Index");
+                //    }
+                //    else
+                //    {
+                //        foreach (var error in result.Errors)
+                //        {
+                //            ModelState.AddModelError(string.Empty, error.Description);
+                //        }
+                //    }
+                //}
+                //else
+                //{
+                //    ModelState.AddModelError(string.Empty, "User not found");
+                //}
+                #endregion
             }
             return View(model);
         }
