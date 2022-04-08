@@ -5,13 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Views\Home\**" />
     <Compile Remove="Views\Identity\**" />
-    <Content Remove="Views\Home\**" />
     <Content Remove="Views\Identity\**" />
-    <EmbeddedResource Remove="Views\Home\**" />
     <EmbeddedResource Remove="Views\Identity\**" />
-    <None Remove="Views\Home\**" />
     <None Remove="Views\Identity\**" />
   </ItemGroup>
 

@@ -17,6 +17,10 @@ namespace TournamentPlanner
             if (await roleManager.FindByNameAsync("player") == null)
             {
                 await roleManager.CreateAsync(new IdentityRole("player"));
+            }   
+            if (await roleManager.FindByNameAsync("guest") == null)
+            {
+                await roleManager.CreateAsync(new IdentityRole("guest"));
             }
 
             if (await userManager.FindByNameAsync(adminEmail) == null)
@@ -27,6 +31,12 @@ namespace TournamentPlanner
                 {
                     await userManager.AddToRoleAsync(admin, "admin");
                 }
+            }
+            
+            User adminUser = await userManager.FindByEmailAsync(adminEmail);
+            if (!await userManager.IsInRoleAsync(adminUser, "admin"))
+            {
+                await userManager.AddToRoleAsync(adminUser, "admin");
             }
         }
     }
