@@ -49,7 +49,8 @@ namespace TournamentPlanner
             services.AddControllersWithViews();
          
             services.AddIdentity<User, IdentityRole>().AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<DBContext>();
+                .AddEntityFrameworkStores<DBContext>()
+                .AddDefaultTokenProviders();
 
             services.AddTransient<IPlayerService, PlayerService>();
             services.AddTransient<IClubService, ClubService>();
