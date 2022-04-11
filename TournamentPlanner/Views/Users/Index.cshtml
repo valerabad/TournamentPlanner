@@ -15,6 +15,8 @@
             <td>
                 <form asp-action="Remove" asp-route-id="@user.Id" method="post">
                     <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@user.Id">Edit</a>
+                    <a class="btn btn-sm btn btn-dark" asp-action="ChangePassword" asp-route-id="@user.Id">Change password</a>
+                    <a class="btn btn-sm btn-secondary" asp-controller="Roles" asp-action="Edit" asp-route-userid="@user.Id">Access rights</a>
                     <button type="submit" action="Remove" class="btn btn-sm btn-danger">
                         Remove
                     </button>

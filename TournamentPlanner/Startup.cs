@@ -49,7 +49,8 @@ namespace TournamentPlanner
             services.AddControllersWithViews();
          
             services.AddIdentity<User, IdentityRole>().AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<DBContext>();
+                .AddEntityFrameworkStores<DBContext>()
+                .AddDefaultTokenProviders();
 
             services.AddTransient<IPlayerService, PlayerService>();
             services.AddTransient<IClubService, ClubService>();
@@ -78,14 +79,16 @@ namespace TournamentPlanner
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
-            app.UseAuthorization();
+
             app.UseAuthentication();
+            app.UseAuthorization();
+            
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Players}/{action=Create}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

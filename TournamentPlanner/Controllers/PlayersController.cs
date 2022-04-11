@@ -14,6 +14,7 @@ using OfficeOpenXml;
 using System.Drawing;
 using OfficeOpenXml.Style;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TournamentPlanner.Controllers
 {
@@ -82,7 +83,8 @@ namespace TournamentPlanner.Controllers
 
             return View(playerViewModel);
         }
-        
+
+        [Authorize(Roles = "admin, player, guest")]
         public IActionResult Create()
         {
             // We have not use DAL here, but just for test 
@@ -102,7 +104,7 @@ namespace TournamentPlanner.Controllers
             return View(playerViewModel);
         }
 
-
+        [Authorize(Roles = "admin, player")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(PlayerViewModel player)
@@ -135,6 +137,7 @@ namespace TournamentPlanner.Controllers
             return View(player);
         }
 
+        [Authorize(Roles = "admin, player")]
         // GET: Players/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -174,6 +177,7 @@ namespace TournamentPlanner.Controllers
             return View(playerViewModel);
         }
 
+        [Authorize(Roles = "admin, player")]
         // POST: Players/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -218,6 +222,7 @@ namespace TournamentPlanner.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize(Roles = "admin")]
         // GET: Players/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -250,6 +255,7 @@ namespace TournamentPlanner.Controllers
             return View(playerViewModel);
         }
 
+        [Authorize(Roles = "admin")]
         // POST: Players/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -273,6 +279,7 @@ namespace TournamentPlanner.Controllers
             return View();
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult BatchPlayerUpload(IFormFile batchPlayers)
