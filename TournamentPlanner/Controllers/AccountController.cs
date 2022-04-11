@@ -17,7 +17,7 @@ namespace TournamentPlanner.Controllers
 
         public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
-            _userManager = userManager;
+            _userManager = userManager; 
             _signInManager = signInManager;
         }
 
@@ -25,6 +25,24 @@ namespace TournamentPlanner.Controllers
         public IActionResult Register()
         {
             return View();
+        }
+
+        public async Task<IActionResult> ConfirmEmailProcess(string email)
+        {
+            User user = await _userManager.FindByEmailAsync(email); //new User { Email = model.Email, UserName = model.Email, Year = model.Year };
+            
+            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var callbackUrl = Url.Action(
+                "ConfirmEmail",
+                "Account",
+                new { userId = user.Id, code = code },
+                protocol: HttpContext.Request.Scheme);
+
+            EmailService emailService = new EmailService();
+
+            await emailService.SendEmailAsync(email, "Confirm your account",
+                $"Please confirm registration by: <a href='{callbackUrl}'>link</a>");
+            return Content("For complete registration please go to your e-mail and click link");
         }
 
         [HttpPost]
@@ -38,18 +56,7 @@ namespace TournamentPlanner.Controllers
 
                 if (result.Succeeded)
                 {
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var callbackUrl = Url.Action(
-                        "ConfirmEmail",
-                        "Account",
-                        new { userId = user.Id, code = code },
-                        protocol: HttpContext.Request.Scheme);
-
-                    EmailService emailService = new EmailService();
-
-                    await emailService.SendEmailAsync(model.Email, "Confirm your account",
-                        $"Please confirm registration by: <a href='{callbackUrl}'>link</a>");
-
+                    await ConfirmEmailProcess(model.Email);
                     return Content("For complete registration please go to your e-mail and click link");
                 }
                 else
@@ -66,6 +73,7 @@ namespace TournamentPlanner.Controllers
         [HttpGet]
         public IActionResult Login(string returnUrl = null)
         {
+            ViewBag.isConfirm = true;
             return View(new LoginViewModel { ReturnUrl = returnUrl });
         }
 
@@ -76,11 +84,14 @@ namespace TournamentPlanner.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByNameAsync(model.Email);
+                ViewBag.isConfirm = true;
+
                 if (user != null)
                 {
                     if (!await _userManager.IsEmailConfirmedAsync(user))
                     {
                         ModelState.AddModelError(string.Empty, "You didn't confirm e-mail");
+                        ViewBag.isConfirm = false;
                         return View(model);
                     }
                 }
@@ -139,20 +150,5 @@ namespace TournamentPlanner.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Register", "Account");
         }
-
-        //private async Task Authenticate(User user)
-        //{
-        //    // создаем один claim
-        //    var claims = new List<Claim>
-        //    {
-        //        new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
-        //        new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role?.Name)
-        //    };
-        //    // создаем объект ClaimsIdentity
-        //    ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType,
-        //        ClaimsIdentity.DefaultRoleClaimType);
-        //    // установка аутентификационных куки
-        //    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
-        //}
     }
 }

@@ -84,7 +84,7 @@ namespace TournamentPlanner.Controllers
             return View(playerViewModel);
         }
 
-        [Authorize(Roles = "admin, player")]
+        [Authorize(Roles = "admin, player, guest")]
         public IActionResult Create()
         {
             // We have not use DAL here, but just for test 
