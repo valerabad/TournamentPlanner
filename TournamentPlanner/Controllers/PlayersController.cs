@@ -104,7 +104,7 @@ namespace TournamentPlanner.Controllers
             return View(playerViewModel);
         }
 
-        [Authorize(Roles = "admin, player")]
+        [Authorize(Roles = "admin, player, guest")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(PlayerViewModel player)
