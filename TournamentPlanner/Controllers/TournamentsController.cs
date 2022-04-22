@@ -5,24 +5,40 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using TournamentPlanner.DAL.EF;
-using TournamentPlanner.DAL.Entities;
+using BLL.DTO;
+using BLL.Interfaces;
+using TournamentPlanner.Models;
 
 namespace TournamentPlanner.Controllers
 {
     public class TournamentsController : Controller
     {
-        private readonly DBContext _context;
+        private readonly ITournamentService tourService;
 
-        public TournamentsController(DBContext context)
+        public TournamentsController(ITournamentService _tournamentService)
         {
-            _context = context;
+            tourService = _tournamentService;
         }
 
         // GET: Tournaments
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Tournaments.ToListAsync());
+           var tourViewModel = tourService.GetAll().Select(x => new TournamentViewModel()
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Description = x.Description,
+                Email = x.Email,
+                WebSite = x.WebSite,
+                Logo = x.Logo,
+                DateEnd = x.DateEnd,
+                DateStart = x.DateStart,               
+                EntryMethod = x.EntryMethod,
+                Events = x.Events,
+                CourtsCount = x.CourtsCount
+            });
+            return View(tourViewModel);
+            
         }
 
         // GET: Tournaments/Details/5
@@ -33,14 +49,29 @@ namespace TournamentPlanner.Controllers
                 return NotFound();
             }
 
-            var tournament = await _context.Tournaments
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (tournament == null)
+            var tour = tourService.GetTourById(id);
+
+            if (tour == null)
             {
                 return NotFound();
             }
 
-            return View(tournament);
+            TournamentViewModel tournamentViewModel = new TournamentViewModel()
+            {
+                Id = tour.Id,
+                Name = tour.Name,
+                Description = tour.Description,
+                Email = tour.Email,
+                WebSite = tour.WebSite,
+                Logo = tour.Logo,
+                DateEnd = tour.DateEnd,
+                DateStart = tour.DateStart,
+                EntryMethod = tour.EntryMethod,
+                Events = tour.Events,
+                CourtsCount = tour.CourtsCount
+            };
+           
+            return View(tournamentViewModel);
         }
 
         // GET: Tournaments/Create
@@ -49,20 +80,32 @@ namespace TournamentPlanner.Controllers
             return View();
         }
 
-        // POST: Tournaments/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Email,WebSite,Logo,EntryMethod,Events,DateStart,DateEnd,CourtsCount")] Tournament tournament)
+        public async Task<IActionResult> Create([Bind("Id,Name")] TournamentViewModel tour)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(tournament);
-                await _context.SaveChangesAsync();
+                var tourDTO = new TournamentDTO()
+                {
+                    Id = tour.Id,
+                    Name = tour.Name,
+                    Description = tour.Description,
+                    Email = tour.Email,
+                    WebSite = tour.WebSite,
+                    Logo = tour.Logo,
+                    DateEnd = tour.DateEnd,
+                    DateStart = tour.DateStart,
+                    EntryMethod = (BLL.DTO.EntryMethodEnum)tour.EntryMethod,
+                    Events = tour.Events,
+                    CourtsCount = tour.CourtsCount
+                };
+
+                tourService.Create(tourDTO);
                 return RedirectToAction(nameof(Index));
             }
-            return View(tournament);
+            return View(tour);
         }
 
         // GET: Tournaments/Edit/5
@@ -73,36 +116,64 @@ namespace TournamentPlanner.Controllers
                 return NotFound();
             }
 
-            var tournament = await _context.Tournaments.FindAsync(id);
-            if (tournament == null)
+            var tour = tourService.GetTourById(id);
+
+            if (tour == null)
             {
                 return NotFound();
             }
-            return View(tournament);
+
+            var tournamentViewModel = new TournamentViewModel()
+            {
+                Id = tour.Id,
+                Name = tour.Name,
+                Description = tour.Description,
+                Email = tour.Email,
+                WebSite = tour.WebSite,
+                Logo = tour.Logo,
+                DateEnd = tour.DateEnd,
+                DateStart = tour.DateStart,
+                EntryMethod = tour.EntryMethod,
+                Events = tour.Events,
+                CourtsCount = tour.CourtsCount
+            };
+
+            return View(tournamentViewModel);
         }
 
-        // POST: Tournaments/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Email,WebSite,Logo,EntryMethod,Events,DateStart,DateEnd,CourtsCount")] Tournament tournament)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Events,CourtsCount")] TournamentViewModel tour)
         {
-            if (id != tournament.Id)
+            if (id != tour.Id)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
+                var tourDTO = new TournamentDTO()
+                {
+                    Id = tour.Id,
+                    Name = tour.Name,
+                    Description = tour.Description,
+                    Email = tour.Email,
+                    WebSite = tour.WebSite,
+                    Logo = tour.Logo,
+                    DateEnd = tour.DateEnd,
+                    DateStart = tour.DateStart,
+                    EntryMethod = tour.EntryMethod,
+                    Events = tour.Events,
+                    CourtsCount = tour.CourtsCount
+
+                };
                 try
                 {
-                    _context.Update(tournament);
-                    await _context.SaveChangesAsync();
+                    tourService.Edit(tourDTO);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TournamentExists(tournament.Id))
+                    if (!TournamentExists(tour.Id))
                     {
                         return NotFound();
                     }
@@ -113,7 +184,7 @@ namespace TournamentPlanner.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(tournament);
+            return View(tour);
         }
 
         // GET: Tournaments/Delete/5
@@ -124,14 +195,28 @@ namespace TournamentPlanner.Controllers
                 return NotFound();
             }
 
-            var tournament = await _context.Tournaments
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (tournament == null)
+            var tour = tourService.GetTourById(id);
+            if (tour == null)
             {
                 return NotFound();
             }
 
-            return View(tournament);
+            TournamentViewModel tournamentViewModel = new TournamentViewModel()
+            {
+                Id = tour.Id,
+                Name = tour.Name,
+                Description = tour.Description,
+                Email = tour.Email,
+                WebSite = tour.WebSite,
+                Logo = tour.Logo,
+                DateEnd = tour.DateEnd,
+                DateStart = tour.DateStart,
+                EntryMethod = tour.EntryMethod,
+                Events = tour.Events,
+                CourtsCount = tour.CourtsCount
+            };
+
+            return View(tournamentViewModel);
         }
 
         // POST: Tournaments/Delete/5
@@ -139,15 +224,14 @@ namespace TournamentPlanner.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var tournament = await _context.Tournaments.FindAsync(id);
-            _context.Tournaments.Remove(tournament);
-            await _context.SaveChangesAsync();
+            var tour = tourService.GetTourById(id);
+            tourService.DeleteById(id);
             return RedirectToAction(nameof(Index));
         }
 
         private bool TournamentExists(int id)
         {
-            return _context.Tournaments.Any(e => e.Id == id);
+            return tourService.GetAll().Any(e => e.Id == id);
         }
     }
 }

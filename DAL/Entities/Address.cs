@@ -16,5 +16,6 @@ namespace TournamentPlanner.DAL.Entities
         public string MobilePhone { get; set; }
         // How can we save this field?
         public string CountryFlag { get; set; }
+        public int Test { get; set; }
     }
 }

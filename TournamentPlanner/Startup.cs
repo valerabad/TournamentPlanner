@@ -57,12 +57,15 @@ namespace TournamentPlanner
             services.AddTransient<IPlayerService, PlayerService>();
             services.AddTransient<IClubService, ClubService>();
             services.AddTransient<IExcelService, ExcelService>();
-            services.AddTransient<TournamentsController>();
+            services.AddTransient<ITournamentService, TournamentService>();
+
+            //services.AddTransient<TournamentsController>();
 
             services.AddTransient<IUnitOfWork, EFUnitOfWork>();
-
+                
             services.AddTransient <IPlayerRepository, PlayerRepository>();
             services.AddTransient <IClubRepository, ClubRepository>();
+            services.AddTransient<ITournamentRepository, TournamentRepository>();
 
             services.Configure<EmailOptions>(Configuration.GetSection(EmailOptions.Settings));
 
