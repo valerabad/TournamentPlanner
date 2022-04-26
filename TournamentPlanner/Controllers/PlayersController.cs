@@ -63,6 +63,12 @@ namespace TournamentPlanner.Controllers
             }
 
             var player = playerService.GetPlayer(id);
+
+            if (player == null)
+            {
+                return NotFound();
+            }
+
             PlayerViewModel playerViewModel = new PlayerViewModel()
             {
                 Id = player.Id,
@@ -76,11 +82,7 @@ namespace TournamentPlanner.Controllers
                 Notes = player.Notes,
                 //Clubs = model
             };
-            if (player == null)
-            {
-                return NotFound();
-            }
-
+          
             return View(playerViewModel);
         }
 
@@ -104,7 +106,7 @@ namespace TournamentPlanner.Controllers
             return View(playerViewModel);
         }
 
-        [Authorize(Roles = "admin, player")]
+        [Authorize(Roles = "admin, player, guest")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(PlayerViewModel player)

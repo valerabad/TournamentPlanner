@@ -9,10 +9,7 @@
     <p>Welcome @User.Identity.Name</p>
     @if (!User.IsInRole("admin"))
     {
-        @if (!User.IsInRole("player"))
-        {
-            <a asp-controller="Players" asp-action="Create">Become a player</a>
-        }
+        <a asp-controller="Players" asp-action="Create">Become a player</a>
         <br/>
         <a asp-controller="Players" asp-action="Index">Continue as guest</a>
     }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -14,11 +15,17 @@ namespace TournamentPlanner.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly EmailOptions _emailOptions;
+        
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(
+            UserManager<User> userManager, 
+            SignInManager<User> signInManager,
+            IOptions<TournamentPlanner.EmailOptions> options)
         {
             _userManager = userManager; 
             _signInManager = signInManager;
+            _emailOptions = options.Value;
         }
 
         [HttpGet]
@@ -29,7 +36,7 @@ namespace TournamentPlanner.Controllers
 
         public async Task<IActionResult> ConfirmEmailProcess(string email)
         {
-            User user = await _userManager.FindByEmailAsync(email); //new User { Email = model.Email, UserName = model.Email, Year = model.Year };
+            User user = await _userManager.FindByEmailAsync(email);
             
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             var callbackUrl = Url.Action(
@@ -37,8 +44,13 @@ namespace TournamentPlanner.Controllers
                 "Account",
                 new { userId = user.Id, code = code },
                 protocol: HttpContext.Request.Scheme);
-
-            EmailService emailService = new EmailService();
+            var test = _emailOptions.Address;
+            EmailService emailService = new EmailService(
+                _emailOptions.Address,
+                _emailOptions.SenderName, 
+                _emailOptions.Smtp, 
+                _emailOptions.Port, 
+                _emailOptions.Password);
 
             await emailService.SendEmailAsync(email, "Confirm your account",
                 $"Please confirm registration by: <a href='{callbackUrl}'>link</a>");

@@ -7,6 +7,6 @@ namespace TournamentPlanner.DAL.Interfaces
     public interface IUnitOfWork //: IDisposable
     {
         IPlayerRepository PlayersRepository { get; }
-        //void Save();
+        //ITournamentRepository TournamentRepository { get; }
     }
 }

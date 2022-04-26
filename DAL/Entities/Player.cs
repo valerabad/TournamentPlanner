@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace TournamentPlanner.DAL.Entities
@@ -19,6 +20,7 @@ namespace TournamentPlanner.DAL.Entities
         public int? ClubId { get; set; }
         public virtual Club Club { get; set; }
         public string UserId { get; set; }
+        public List<Tournament> Tournaments { get; set; } = new List<Tournament>();
 
     }
 }
