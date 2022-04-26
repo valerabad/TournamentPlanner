@@ -22,6 +22,8 @@ using TournamentPlanner.DAL.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 
+// TODO remove
+using TournamentPlanner.Controllers;
 
 namespace TournamentPlanner
 {
@@ -55,11 +57,18 @@ namespace TournamentPlanner
             services.AddTransient<IPlayerService, PlayerService>();
             services.AddTransient<IClubService, ClubService>();
             services.AddTransient<IExcelService, ExcelService>();
+            services.AddTransient<ITournamentService, TournamentService>();
+
+            //services.AddTransient<TournamentsController>();
 
             services.AddTransient<IUnitOfWork, EFUnitOfWork>();
-
+                
             services.AddTransient <IPlayerRepository, PlayerRepository>();
             services.AddTransient <IClubRepository, ClubRepository>();
+            services.AddTransient<ITournamentRepository, TournamentRepository>();
+
+            services.Configure<EmailOptions>(Configuration.GetSection(EmailOptions.Settings));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

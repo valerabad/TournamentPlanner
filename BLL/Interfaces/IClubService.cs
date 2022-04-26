@@ -18,7 +18,6 @@ namespace BLL.Interfaces
         void DeletePlayer(int? playerId, int? clubId);
         void Create(ClubDTO club);
 
-        //public IEnumerable<PlayerDTO> GetPlayers();
         public IEnumerable<PlayerDTO> GetPlayersWithoutClub();
 
         public void AddPlayersToClub(int clubId, IEnumerable<int> playerId);
