@@ -17,5 +17,6 @@ namespace BLL.Interfaces
         void DeleteById(int? id);
         void Publish();
         void AddPlayers(List<PlayerDTO> players);
+        IEnumerable<TournamentDTO> GetByActualDate();
     }
 }

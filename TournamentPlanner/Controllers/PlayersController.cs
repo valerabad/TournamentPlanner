@@ -129,11 +129,14 @@ namespace TournamentPlanner.Controllers
                     LastName = player.LastName,
                     Notes = player.Notes,
                     ClubId = player.ClubId,
-                    UserId = user.Id,
-                  
+                    UserId = user.Id,  
                 };
-               
-                playerService.Create(playerDTO);
+
+
+                if (!playerService.GetPlayers().Any(x => x.UserId == user.Id))
+                    playerService.Create(playerDTO);
+                else
+                    return RedirectToPage("Error");
                 return RedirectToAction(nameof(Index));
             }
             return View(player);

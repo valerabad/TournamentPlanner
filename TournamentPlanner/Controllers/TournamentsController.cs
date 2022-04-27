@@ -83,7 +83,7 @@ namespace TournamentPlanner.Controllers
        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] TournamentViewModel tour)
+        public async Task<IActionResult> Create(TournamentViewModel tour)
         {
             if (ModelState.IsValid)
             {
@@ -232,6 +232,26 @@ namespace TournamentPlanner.Controllers
         private bool TournamentExists(int id)
         {
             return tourService.GetAll().Any(e => e.Id == id);
+        }
+
+        public async Task<IActionResult> EnabledTournamentsList()
+        {
+            var tourViewModel = tourService.GetByActualDate()
+                .Select(x => new TournamentViewModel()
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Description = x.Description,
+                    Email = x.Email,
+                    WebSite = x.WebSite,
+                    Logo = x.Logo,
+                    DateEnd = x.DateEnd,
+                    DateStart = x.DateStart,
+                    EntryMethod = x.EntryMethod,
+                    Events = x.Events,
+                    CourtsCount = x.CourtsCount
+                });
+            return View(tourViewModel);
         }
     }
 }

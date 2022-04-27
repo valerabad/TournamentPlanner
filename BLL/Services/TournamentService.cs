@@ -107,5 +107,26 @@ namespace BLL.Services
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<TournamentDTO> GetByActualDate()
+        {
+            var tours = tournamentRepository.GetAll()
+                .Where(x=>x.DateStart >= DateTime.Now)
+                .Select(x => new TournamentDTO()
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Description = x.Description,
+                    Logo = x.Logo,
+                    WebSite = x.WebSite,
+                    CourtsCount = x.CourtsCount,
+                    DateEnd = x.DateEnd,
+                    DateStart = x.DateStart,
+                    Email = x.Email,
+                    EntryMethod = (DTO.EntryMethodEnum)x.EntryMethod,
+                    Events = x.Events
+                }); 
+            return tours;
+        }
     }
 }

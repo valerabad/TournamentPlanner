@@ -79,7 +79,9 @@ namespace BLL.Services
             {
                 Title = clubDTO.Title,
                 Id = clubDTO.Id,
-                Logo = clubDTO.Logo
+                Logo = clubDTO.Logo,
+                Description = clubDTO.Description
+                
             };
             clubRepository.CreateClub(club);
         }

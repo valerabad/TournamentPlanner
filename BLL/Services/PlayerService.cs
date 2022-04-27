@@ -31,10 +31,11 @@ namespace BLL.Services
                 Gender = x.Gender,
                 Notes = x.Notes,
                 Id = x.Id,
-                ClubId = x.ClubId
+                ClubId = x.ClubId,
+                UserId = x.UserId
             });
 
-
+            
             return players;
 
             // применяем автомаппер для проекции одной коллекции на другую
