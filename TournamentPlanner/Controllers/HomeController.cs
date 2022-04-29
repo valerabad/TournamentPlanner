@@ -19,12 +19,18 @@ namespace TournamentPlanner.Models
 
         public async Task<IActionResult> Index()
         {
-            var user = await _userManager.FindByEmailAsync(User.Identity.Name);
+            if (User.Identity.Name != null)
+            {
+                var user = await _userManager.FindByEmailAsync(User.Identity.Name);
 
-            if (playerService.GetPlayers().Any(x => x.UserId == user.Id))
-                return RedirectToAction("EnabledTournamentsList", "Tournaments");
-            else 
+                if (playerService.GetPlayers().Any(x => x.UserId == user.Id))
+                    return RedirectToAction("EnabledTournamentsList", "Tournaments");
+                else
+                    return View();
+            }
+            else
                 return View();
+           
         }
     }
 }

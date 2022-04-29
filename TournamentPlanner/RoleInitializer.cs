@@ -31,6 +31,7 @@ namespace TournamentPlanner
                 {
                     await userManager.AddToRoleAsync(admin, "admin");
                     admin.EmailConfirmed = true;
+                  
                     await userManager.UpdateAsync(admin);
                 }
             }

@@ -26,7 +26,7 @@ namespace BLL.Services
                 FirstName = x.FirstName,
                 LastName = x.LastName,
                 EntryMethod = x.EntryMethod,
-                AddressId = x.AddressId,
+                //AddressId = x.AddressId,
                 Birthday = x.Birthday,
                 Gender = x.Gender,
                 Notes = x.Notes,
@@ -52,7 +52,7 @@ namespace BLL.Services
                 FirstName = player.FirstName,
                 LastName = player.LastName,
                 EntryMethod = player.EntryMethod,
-                AddressId = player.AddressId,
+                //AddressId = player.AddressId,
                 Birthday = player.Birthday,
                 Gender = player.Gender,
                 Notes = player.Notes,
@@ -71,7 +71,7 @@ namespace BLL.Services
             var player = new Player()
             {
                 Id = playerDTO.Id,
-                AddressId = playerDTO.AddressId,
+                //AddressId = playerDTO.AddressId,
                 FirstName = playerDTO.FirstName,
                 Birthday = playerDTO.Birthday,
                 ClubId = playerDTO.ClubId,

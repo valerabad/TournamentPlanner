@@ -15,7 +15,7 @@ namespace TournamentPlanner.DAL.Entities
         [DataType(DataType.Date)]
         public DateTime? Birthday { get; set; } 
         public string Notes { get; set; }
-        public int AddressId { get; set; }
+        //public int AddressId { get; set; }
         public string EntryMethod { get; set; }
         public int? ClubId { get; set; }
         public virtual Club Club { get; set; }

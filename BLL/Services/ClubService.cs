@@ -52,7 +52,7 @@ namespace BLL.Services
             return clubRepository.GetPlayersByClubId(id).Select(x => new PlayerDTO
             {
                 Id = x.Id,
-                AddressId = x.AddressId,
+                //AddressId = x.AddressId,
                 Birthday = x.Birthday,
                 ClubId = x.ClubId,
                 EntryMethod = x.EntryMethod,
@@ -91,7 +91,7 @@ namespace BLL.Services
             return clubRepository.GetPlayersWithoutClub().Select(x => new PlayerDTO
             {
                 Id = x.Id,
-                AddressId = x.AddressId,
+                //AddressId = x.AddressId,
                 Birthday = x.Birthday,
                 ClubId = x.ClubId,
                 EntryMethod = x.EntryMethod,

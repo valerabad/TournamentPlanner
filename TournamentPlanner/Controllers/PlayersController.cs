@@ -132,11 +132,14 @@ namespace TournamentPlanner.Controllers
                     UserId = user.Id,  
                 };
 
-
                 if (!playerService.GetPlayers().Any(x => x.UserId == user.Id))
                     playerService.Create(playerDTO);
                 else
-                    return RedirectToPage("Error");
+                {
+                    playerService.Create(playerDTO);
+                    //return RedirectToPage("Error");
+                }
+                    
                 return RedirectToAction(nameof(Index));
             }
             return View(player);

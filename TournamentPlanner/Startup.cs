@@ -74,7 +74,7 @@ namespace TournamentPlanner
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            env.EnvironmentName = "Production";
+            //env.EnvironmentName = "Production";
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -90,7 +90,7 @@ namespace TournamentPlanner
 
             app.Map("/error", ap => ap.Run(async context =>
             {
-                await context.Response.WriteAsync("Player has been created. You can create only one player for own account");
+                await context.Response.WriteAsync("Midleware Error: something has wong");
             }));
 
             //app.Run(async (context) =>

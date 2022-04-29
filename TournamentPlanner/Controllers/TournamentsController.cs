@@ -14,16 +14,18 @@ namespace TournamentPlanner.Controllers
     public class TournamentsController : Controller
     {
         private readonly ITournamentService tourService;
+        private readonly IPlayerService playerService;
 
-        public TournamentsController(ITournamentService _tournamentService)
+        public TournamentsController(ITournamentService _tournamentService, IPlayerService _playerService)
         {
             tourService = _tournamentService;
+            playerService = _playerService;
         }
 
         // GET: Tournaments
         public async Task<IActionResult> Index()
         {
-           var tourViewModel = tourService.GetAll().Select(x => new TournamentViewModel()
+            var tourViewModel = tourService.GetAll().Select(x => new TournamentViewModel()
             {
                 Id = x.Id,
                 Name = x.Name,
@@ -32,13 +34,13 @@ namespace TournamentPlanner.Controllers
                 WebSite = x.WebSite,
                 Logo = x.Logo,
                 DateEnd = x.DateEnd,
-                DateStart = x.DateStart,               
+                DateStart = x.DateStart,
                 EntryMethod = x.EntryMethod,
                 Events = x.Events,
                 CourtsCount = x.CourtsCount
             });
             return View(tourViewModel);
-            
+
         }
 
         // GET: Tournaments/Details/5
@@ -70,7 +72,7 @@ namespace TournamentPlanner.Controllers
                 Events = tour.Events,
                 CourtsCount = tour.CourtsCount
             };
-           
+
             return View(tournamentViewModel);
         }
 
@@ -80,7 +82,7 @@ namespace TournamentPlanner.Controllers
             return View();
         }
 
-       
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(TournamentViewModel tour)
@@ -252,6 +254,12 @@ namespace TournamentPlanner.Controllers
                     CourtsCount = x.CourtsCount
                 });
             return View(tourViewModel);
+        }
+
+        public async Task<IActionResult> AddPlayerToTour()
+        {
+
+            return View();
         }
     }
 }
