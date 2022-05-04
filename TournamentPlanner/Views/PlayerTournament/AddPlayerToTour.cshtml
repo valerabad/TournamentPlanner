@@ -1,0 +1,98 @@
+﻿@model TournamentPlanner.Models.PlayerTournamentViewModel
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div>
+      <form asp-action="AddPlayerToTour">
+           <div class="row">
+                <div class="col-md-6">
+               <h4>Tournament</h4>
+                <hr />
+                <dl class="row">
+                    <dt class = "col-sm-2">
+                        @Html.DisplayNameFor(model =>  model.Tournament.Name)
+                    </dt>
+                    <dd class = "col-sm-10">
+                        @Html.DisplayFor(model =>  model.Tournament.Name)
+                    </dd>
+                    <dt class = "col-sm-2">
+                        @Html.DisplayNameFor(model => model.Tournament.Description)
+                    </dt>
+                    <dd class = "col-sm-10">
+                        @Html.DisplayFor(model => model.Tournament.Description)
+                    </dd>
+                    <dt class = "col-sm-2">
+                        @Html.DisplayNameFor(model => model.Tournament.WebSite)
+                    </dt>
+                    <dd class = "col-sm-10">
+                        @Html.DisplayFor(model => model.Tournament.WebSite)
+                    </dd>
+                    <dt class = "col-sm-2">
+                        @Html.DisplayNameFor(model => model.Tournament.Logo)
+                    </dt>
+                    <dd class = "col-sm-10">
+                        @Html.DisplayFor(model => model.Tournament.Logo)
+                    </dd>
+                    <dt class = "col-sm-2">
+                        @Html.DisplayNameFor(model => model.Tournament.Events)
+                    </dt>
+                    <dd class = "col-sm-10">
+                        @Html.DisplayFor(model => model.Tournament.Events)
+                    </dd>
+                    <dt class = "col-sm-2">
+                        @Html.DisplayNameFor(model => model.Tournament.DateStart)
+                    </dt>
+                    <dd class = "col-sm-10">
+                        @Html.DisplayFor(model => model.Tournament.DateStart)
+                    </dd>
+                    <dt class = "col-sm-2">
+                        @Html.DisplayNameFor(model => model.Tournament.DateEnd)
+                    </dt>
+                    <dd class = "col-sm-10">
+                        @Html.DisplayFor(model => model.Tournament.DateEnd)
+                    </dd>   
+                </dl>
+            </div>
+            
+
+            <div class="col-md-6">
+               <h4>Player</h4>
+                <hr />
+                <dl class="row">
+                    <dt class = "col-sm-2">
+                        @Html.DisplayNameFor(model =>  model.Player.FirstName)
+                    </dt>
+                    <dd class = "col-sm-10">
+                        @Html.DisplayFor(model =>  model.Player.FirstName)
+                    </dd>
+                    <dt class = "col-sm-2">
+                        @Html.DisplayNameFor(model =>  model.Player.LastName)
+                    </dt>
+                    <dd class = "col-sm-10">
+                        @Html.DisplayFor(model =>  model.Player.LastName)
+                    </dd>
+                     @* Edit dropdown list Events of Tournament *@
+                     <dt class = "col-sm-2">
+                        @Html.DisplayNameFor(model => model.Tournament.Events)
+                    </dt>
+                    <dd class = "col-sm-10">
+                       @Html.DropDownList("test", new SelectList("ms","ws"), "select")
+                    </dd>
+                </dl>
+            </div>
+          
+            <div>
+               <input type="submit" value="Confirm" class="btn btn-primary" />
+            </div>
+         </div>
+      </form>
+    </div>
+</body>
+</html>

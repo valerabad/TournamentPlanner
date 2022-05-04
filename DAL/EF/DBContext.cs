@@ -13,7 +13,7 @@ namespace TournamentPlanner.DAL.EF
         public DBContext (DbContextOptions<DBContext> options)
             : base(options)
         {
-            Database.EnsureDeleted();
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 

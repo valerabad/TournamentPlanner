@@ -8,18 +8,19 @@ using Microsoft.EntityFrameworkCore;
 using BLL.DTO;
 using BLL.Interfaces;
 using TournamentPlanner.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace TournamentPlanner.Controllers
 {
     public class TournamentsController : Controller
     {
         private readonly ITournamentService tourService;
-        private readonly IPlayerService playerService;
+        
 
-        public TournamentsController(ITournamentService _tournamentService, IPlayerService _playerService)
+        public TournamentsController(ITournamentService _tournamentService, IPlayerService _playerService, UserManager<DAL.Entities.User> _userManager)
         {
             tourService = _tournamentService;
-            playerService = _playerService;
+           
         }
 
         // GET: Tournaments
@@ -167,7 +168,6 @@ namespace TournamentPlanner.Controllers
                     EntryMethod = tour.EntryMethod,
                     Events = tour.Events,
                     CourtsCount = tour.CourtsCount
-
                 };
                 try
                 {
@@ -256,10 +256,6 @@ namespace TournamentPlanner.Controllers
             return View(tourViewModel);
         }
 
-        public async Task<IActionResult> AddPlayerToTour()
-        {
-
-            return View();
-        }
+       
     }
 }
