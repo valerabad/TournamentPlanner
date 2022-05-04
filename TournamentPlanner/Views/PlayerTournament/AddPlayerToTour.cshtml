@@ -83,7 +83,17 @@
                         @Html.DisplayNameFor(model => model.Tournament.Events)
                     </dt>
                     <dd class = "col-sm-10">
-                       @Html.DropDownList("test", new SelectList("men single","women single", "men double", "women double", "mix"), "select")
+                       @Html.DropDownList("test", new List<SelectListItem> 
+                       {
+                           new SelectListItem { Text = "men single"},
+                            new SelectListItem { Text ="women single"},
+                            new SelectListItem { Text ="men double"},
+                            new SelectListItem { Text ="women double"},
+                            new SelectListItem { Text ="mix"}
+                       },
+                       "select"
+                       
+                       )
                     </dd>
                 </dl>
             </div>
