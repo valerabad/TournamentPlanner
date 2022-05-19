@@ -57,7 +57,8 @@ namespace BLL.Services
                 Gender = player.Gender,
                 Notes = player.Notes,
                 Id = player.Id,
-                ClubId = player.ClubId
+                ClubId = player.ClubId,
+                UserId= player.UserId
             };
         }
 
@@ -97,6 +98,7 @@ namespace BLL.Services
                 foundPlayer.Notes = playerDTO.Notes;
                 foundPlayer.Gender = playerDTO.Gender;
                 foundPlayer.EntryMethod = playerDTO.EntryMethod;
+                foundPlayer.UserId = playerDTO.UserId;
 
                 Database.PlayersRepository.Update(foundPlayer);
             }

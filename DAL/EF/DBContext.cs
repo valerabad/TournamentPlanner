@@ -31,7 +31,8 @@ namespace TournamentPlanner.DAL.EF
                 new Player { Id = 2, FirstName = "Anton", ClubId = 1 , EntryMethod = "System" },
                 new Player { Id = 3, FirstName = "Elena", ClubId = 2 , EntryMethod = "System" },
                 new Player { Id = 4, FirstName = "Kateryna", ClubId = 3 , EntryMethod = "System" },
-                new Player { Id = 5, FirstName = "Sergey", ClubId = 3 , EntryMethod = "System" }
+                new Player { Id = 5, FirstName = "Sergey", ClubId = 3 , EntryMethod = "System" },
+                new Player { Id = 6, FirstName = "AdminStubPlayer", LastName = "Stub", ClubId = 3, EntryMethod = "Manual" }
                 );
 
             modelBuilder.Entity<Tournament>().HasData(
@@ -77,6 +78,8 @@ namespace TournamentPlanner.DAL.EF
         public DbSet<Player> Players { get; set; }
         public DbSet<Club> Clubs { get; set; }
         public DbSet<Tournament> Tournaments { get; set; }
+        
+        public DbSet<Event> Events { get; set; }
         public DbSet<Address> Addresses { get; set; }
     }
 }

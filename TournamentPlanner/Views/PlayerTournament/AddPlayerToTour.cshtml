@@ -16,6 +16,7 @@
                <h4>Tournament</h4>
                 <hr />
                 <dl class="row">
+                    <input type="hidden" name="tourId" value=@Model.Tournament.Id />
                     <dt class = "col-sm-2">
                         @Html.DisplayNameFor(model =>  model.Tournament.Name)
                     </dt>
@@ -66,6 +67,8 @@
                <h4>Player</h4>
                 <hr />
                 <dl class="row">
+                    @*@Html.TextBoxFor(model => model.Player.Id, new { style = "display: none;" },)*@
+                    <input type="hidden" name="playerId" value=@Model.Player.Id />
                     <dt class = "col-sm-2">
                         @Html.DisplayNameFor(model =>  model.Player.FirstName)
                     </dt>
@@ -83,7 +86,7 @@
                         @Html.DisplayNameFor(model => model.Tournament.Events)
                     </dt>
                     <dd class = "col-sm-10">
-                       @Html.DropDownList("test", new List<SelectListItem> 
+                       @*@Html.DropDownList("test", new List<SelectListItem> 
                        {
                            new SelectListItem { Text = "men single"},
                             new SelectListItem { Text ="women single"},
@@ -91,9 +94,8 @@
                             new SelectListItem { Text ="women double"},
                             new SelectListItem { Text ="mix"}
                        },
-                       "select"
-                       
-                       )
+                       "select")*@
+                        @Html.DropDownList("Events", (IEnumerable<SelectListItem>)ViewData["Events"],"Select")
                     </dd>
                 </dl>
             </div>

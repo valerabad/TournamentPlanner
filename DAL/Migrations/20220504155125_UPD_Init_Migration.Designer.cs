@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TournamentPlanner.DAL.EF;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20220504155125_UPD_Init_Migration")]
+    partial class UPD_Init_Migration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -350,8 +352,8 @@ namespace DAL.Migrations
                         {
                             Id = 1,
                             CourtsCount = 8,
-                            DateEnd = new DateTime(2022, 5, 8, 18, 52, 25, 634, DateTimeKind.Local).AddTicks(3967),
-                            DateStart = new DateTime(2022, 5, 5, 18, 52, 25, 630, DateTimeKind.Local).AddTicks(4822),
+                            DateEnd = new DateTime(2022, 5, 8, 18, 51, 24, 772, DateTimeKind.Local).AddTicks(8132),
+                            DateStart = new DateTime(2022, 5, 5, 18, 51, 24, 771, DateTimeKind.Local).AddTicks(963),
                             Description = "Test",
                             Email = "tournamentTest@gmail.com",
                             EntryMethod = 0,
@@ -363,8 +365,8 @@ namespace DAL.Migrations
                         {
                             Id = 2,
                             CourtsCount = 8,
-                            DateEnd = new DateTime(2022, 5, 12, 18, 52, 25, 634, DateTimeKind.Local).AddTicks(5021),
-                            DateStart = new DateTime(2022, 5, 8, 18, 52, 25, 634, DateTimeKind.Local).AddTicks(5010),
+                            DateEnd = new DateTime(2022, 5, 12, 18, 51, 24, 772, DateTimeKind.Local).AddTicks(9231),
+                            DateStart = new DateTime(2022, 5, 8, 18, 51, 24, 772, DateTimeKind.Local).AddTicks(9223),
                             Description = "Test",
                             Email = "tournamentTest@gmail.com",
                             EntryMethod = 0,
@@ -376,8 +378,8 @@ namespace DAL.Migrations
                         {
                             Id = 3,
                             CourtsCount = 8,
-                            DateEnd = new DateTime(2022, 6, 15, 18, 52, 25, 634, DateTimeKind.Local).AddTicks(5106),
-                            DateStart = new DateTime(2022, 6, 11, 18, 52, 25, 634, DateTimeKind.Local).AddTicks(5103),
+                            DateEnd = new DateTime(2022, 6, 15, 18, 51, 24, 772, DateTimeKind.Local).AddTicks(9237),
+                            DateStart = new DateTime(2022, 6, 11, 18, 51, 24, 772, DateTimeKind.Local).AddTicks(9235),
                             Description = "Test",
                             Email = "tournamentTest@gmail.com",
                             EntryMethod = 0,

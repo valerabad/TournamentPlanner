@@ -9,6 +9,6 @@ namespace TournamentPlanner.DAL.Interfaces
 {
     public interface ITournamentRepository : IRepository<Tournament>
     {
-
+        public IEnumerable<Event> GetEvents();
     }
 }

@@ -1,6 +1,7 @@
 ﻿using BLL.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Linq;
 using System.Threading.Tasks;
 using TournamentPlanner.Models;
@@ -61,13 +62,22 @@ namespace TournamentPlanner.Controllers
                 Tournament = tournamentViewModel
             };
 
+            var events = tourService.GetEvetsList();
+            var fromDatabaseEF = new SelectList(events.ToList(), "Id", "Title");
+            ViewData["Events"] = fromDatabaseEF;
+
             return View(playerTournamentViewModel);
         }
         [HttpPost]
-        public async Task<IActionResult> AddPlayerToTour(TournamentsController playerTournamentViewModel)
+        public async Task<IActionResult> AddPlayerToTour(int Events, int playerId, int tourId)
         {
 
             return View();
         }
+    }
+
+    public class TEst
+    {
+        public int Events { get; set; }
     }
 }

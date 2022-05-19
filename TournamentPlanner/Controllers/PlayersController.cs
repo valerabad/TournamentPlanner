@@ -51,6 +51,9 @@ namespace TournamentPlanner.Controllers
                 Notes = x.Notes,
                 Id = x.Id
             });
+
+           // var players_ = players.FirstOrDefault(r => r.Id == 1); 
+
             return View(players);
         }
 

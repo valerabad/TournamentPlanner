@@ -128,5 +128,17 @@ namespace BLL.Services
                 }); 
             return tours;
         }
+
+        public IEnumerable<EventDTO> GetEvetsList()
+        {
+            return tournamentRepository.GetEvents().Select(x => new EventDTO()
+            {
+                Id=x.Id,
+                Title = x.Title,
+                Gender = x.Gender,
+                Type = x.Type,
+                Fee = x.Fee
+            });
+        }
     }
 }

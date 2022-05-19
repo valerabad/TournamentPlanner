@@ -50,5 +50,10 @@ namespace DAL.Repositories
             _context.Tournaments.Update(item);
             _context.SaveChanges();
         }
+
+        public IEnumerable<Event> GetEvents()
+        {
+           return _context.Events;
+        }
     }
 }

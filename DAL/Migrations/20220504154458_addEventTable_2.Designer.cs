@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TournamentPlanner.DAL.EF;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20220504154458_addEventTable_2")]
+    partial class addEventTable_2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -163,6 +165,39 @@ namespace DAL.Migrations
                     b.HasIndex("TournamentsId");
 
                     b.ToTable("PlayerTournament");
+                });
+
+            modelBuilder.Entity("TournamentPlanner.DAL.Entities.Address", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CountryFlag")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MobilePhone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PostalCode")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Street")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Test")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("TournamentPlanner.DAL.Entities.Club", b =>
@@ -350,8 +385,8 @@ namespace DAL.Migrations
                         {
                             Id = 1,
                             CourtsCount = 8,
-                            DateEnd = new DateTime(2022, 5, 8, 18, 52, 25, 634, DateTimeKind.Local).AddTicks(3967),
-                            DateStart = new DateTime(2022, 5, 5, 18, 52, 25, 630, DateTimeKind.Local).AddTicks(4822),
+                            DateEnd = new DateTime(2022, 5, 8, 18, 44, 57, 731, DateTimeKind.Local).AddTicks(2211),
+                            DateStart = new DateTime(2022, 5, 5, 18, 44, 57, 729, DateTimeKind.Local).AddTicks(5105),
                             Description = "Test",
                             Email = "tournamentTest@gmail.com",
                             EntryMethod = 0,
@@ -363,8 +398,8 @@ namespace DAL.Migrations
                         {
                             Id = 2,
                             CourtsCount = 8,
-                            DateEnd = new DateTime(2022, 5, 12, 18, 52, 25, 634, DateTimeKind.Local).AddTicks(5021),
-                            DateStart = new DateTime(2022, 5, 8, 18, 52, 25, 634, DateTimeKind.Local).AddTicks(5010),
+                            DateEnd = new DateTime(2022, 5, 12, 18, 44, 57, 731, DateTimeKind.Local).AddTicks(2883),
+                            DateStart = new DateTime(2022, 5, 8, 18, 44, 57, 731, DateTimeKind.Local).AddTicks(2876),
                             Description = "Test",
                             Email = "tournamentTest@gmail.com",
                             EntryMethod = 0,
@@ -376,8 +411,8 @@ namespace DAL.Migrations
                         {
                             Id = 3,
                             CourtsCount = 8,
-                            DateEnd = new DateTime(2022, 6, 15, 18, 52, 25, 634, DateTimeKind.Local).AddTicks(5106),
-                            DateStart = new DateTime(2022, 6, 11, 18, 52, 25, 634, DateTimeKind.Local).AddTicks(5103),
+                            DateEnd = new DateTime(2022, 6, 15, 18, 44, 57, 731, DateTimeKind.Local).AddTicks(2889),
+                            DateStart = new DateTime(2022, 6, 11, 18, 44, 57, 731, DateTimeKind.Local).AddTicks(2887),
                             Description = "Test",
                             Email = "tournamentTest@gmail.com",
                             EntryMethod = 0,

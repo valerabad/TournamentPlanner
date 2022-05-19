@@ -18,5 +18,7 @@ namespace BLL.Interfaces
         void Publish();
         void AddPlayers(List<PlayerDTO> players);
         IEnumerable<TournamentDTO> GetByActualDate();
+
+        public IEnumerable<EventDTO> GetEvetsList();
     }
 }

@@ -15,12 +15,14 @@ namespace TournamentPlanner.Controllers
     public class TournamentsController : Controller
     {
         private readonly ITournamentService tourService;
-        
+        private readonly IPlayerService playerService;
+        private readonly UserManager<DAL.Entities.User> userManager;
 
         public TournamentsController(ITournamentService _tournamentService, IPlayerService _playerService, UserManager<DAL.Entities.User> _userManager)
         {
             tourService = _tournamentService;
-           
+            playerService = _playerService;
+            userManager = _userManager;
         }
 
         // GET: Tournaments
@@ -256,6 +258,56 @@ namespace TournamentPlanner.Controllers
             return View(tourViewModel);
         }
 
-       
+        public async Task<IActionResult> AddPlayerToTour(int? id)
+        {
+            var currTour = tourService.GetTourById(id);
+
+            TournamentViewModel tournamentViewModel = new TournamentViewModel()
+            {
+                Id = currTour.Id,
+                Name = currTour.Name,
+                Description = currTour.Description,
+                Email = currTour.Email,
+                WebSite = currTour.WebSite,
+                Logo = currTour.Logo,
+                DateEnd = currTour.DateEnd,
+                DateStart = currTour.DateStart,
+                EntryMethod = currTour.EntryMethod,
+                Events = currTour.Events,
+                CourtsCount = currTour.CourtsCount
+            };
+
+            var user = await userManager.FindByEmailAsync(User.Identity.Name);
+
+            var currPlayer = playerService.GetPlayers().FirstOrDefault(x => x.UserId == user.Id);
+
+
+            PlayerViewModel playerViewModel = new PlayerViewModel()
+            {
+                Id = currPlayer.Id,
+                ClubId = currPlayer.ClubId,
+                FirstName = currPlayer.FirstName,
+                LastName = currPlayer.LastName,
+                EntryMethod = currPlayer.EntryMethod,
+                AddressId = currPlayer.AddressId,
+                Birthday = currPlayer.Birthday,
+                Gender = currPlayer.Gender,
+                Notes = currPlayer.Notes
+            };
+
+            PlayerTournamentViewModel playerTournamentViewModel = new PlayerTournamentViewModel()
+            {
+                Player = playerViewModel,
+                Tournament = tournamentViewModel
+            };
+
+            return View(playerTournamentViewModel);
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddPlayerToTour(PlayerTournamentViewModel playerTournamentViewModel)
+        {
+
+            return View();
+        }
     }
 }
