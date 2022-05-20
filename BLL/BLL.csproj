@@ -5,6 +5,38 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="obj\Debug\net5.0\.NETCoreApp,Version=v5.0.AssemblyAttributes.cs" />
+    <Compile Include="obj\Debug\net5.0\BLL.AssemblyInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="bin\Debug\net5.0\BLL.deps.json" />
+    <Content Include="obj\BLL.csproj.nuget.dgspec.json" />
+    <Content Include="obj\Debug\net5.0\BLL.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\project.assets.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="bin\Debug\net5.0\BLL.dll" />
+    <None Include="bin\Debug\net5.0\BLL.pdb" />
+    <None Include="bin\Debug\net5.0\DAL.dll" />
+    <None Include="bin\Debug\net5.0\DAL.pdb" />
+    <None Include="bin\Debug\net5.0\ref\BLL.dll" />
+    <None Include="obj\BLL.csproj.nuget.g.props" />
+    <None Include="obj\BLL.csproj.nuget.g.targets" />
+    <None Include="obj\Debug\net5.0\BLL.AssemblyInfoInputs.cache" />
+    <None Include="obj\Debug\net5.0\BLL.assets.cache" />
+    <None Include="obj\Debug\net5.0\BLL.csproj.AssemblyReference.cache" />
+    <None Include="obj\Debug\net5.0\BLL.csproj.CopyComplete" />
+    <None Include="obj\Debug\net5.0\BLL.csproj.CoreCompileInputs.cache" />
+    <None Include="obj\Debug\net5.0\BLL.dll" />
+    <None Include="obj\Debug\net5.0\BLL.GeneratedMSBuildEditorConfig.editorconfig" />
+    <None Include="obj\Debug\net5.0\BLL.pdb" />
+    <None Include="obj\Debug\net5.0\ref\BLL.dll" />
+    <None Include="obj\project.nuget.cache" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="EPPlus.Core" Version="1.5.4" />
     <PackageReference Include="MailKit" Version="3.2.0" />
   </ItemGroup>
