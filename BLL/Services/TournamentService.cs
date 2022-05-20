@@ -103,9 +103,24 @@ namespace BLL.Services
             throw new NotImplementedException();
         }
 
-        public void AddPlayers(List<PlayerDTO> players)
+        public void AddPlayer(int tourId, PlayerDTO _player)
         {
-            throw new NotImplementedException();
+            Player player = new Player()
+            {
+                Id = _player.Id,
+                FirstName = _player.FirstName,
+                LastName = _player.LastName,
+                Birthday = _player.Birthday,
+                ClubId = _player.ClubId,
+                EntryMethod = _player.EntryMethod,
+                Gender = _player.Gender,
+                Notes = _player.Notes,
+                UserId = _player.UserId,
+                //Tournaments
+                //Clubs
+            };
+
+            tournamentRepository.AddPlayer(tourId, player);
         }
 
         public IEnumerable<TournamentDTO> GetByActualDate()

@@ -53,7 +53,15 @@ namespace DAL.Repositories
 
         public IEnumerable<Event> GetEvents()
         {
-           return _context.Events;
+           return _context.Events;  
+        }
+
+        public void AddPlayer(int id, Player player)
+        {
+            var tour = _context.Tournaments.Find(id);
+            tour.Players.Add(player);
+            //_context.Entry(player).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
+            _context.SaveChanges();
         }
     }
 }

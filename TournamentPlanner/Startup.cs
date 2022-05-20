@@ -54,7 +54,7 @@ namespace TournamentPlanner
                 .AddEntityFrameworkStores<DBContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddTransient<IPlayerService, PlayerService>();
+            services.AddScoped<IPlayerService, PlayerService>();
             services.AddTransient<IClubService, ClubService>();
             services.AddTransient<IExcelService, ExcelService>();
             services.AddTransient<ITournamentService, TournamentService>();
@@ -74,6 +74,7 @@ namespace TournamentPlanner
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            
             //env.EnvironmentName = "Production";
             if (env.IsDevelopment())
             {

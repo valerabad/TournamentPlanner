@@ -16,7 +16,9 @@ namespace BLL.Interfaces
         void Edit(TournamentDTO player);
         void DeleteById(int? id);
         void Publish();
-        void AddPlayers(List<PlayerDTO> players);
+        //TODO method for several players
+        //void AddPlayers(List<PlayerDTO> players);
+        void AddPlayer(int tourId, PlayerDTO _player);
         IEnumerable<TournamentDTO> GetByActualDate();
 
         public IEnumerable<EventDTO> GetEvetsList();

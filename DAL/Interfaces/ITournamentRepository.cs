@@ -10,5 +10,6 @@ namespace TournamentPlanner.DAL.Interfaces
     public interface ITournamentRepository : IRepository<Tournament>
     {
         public IEnumerable<Event> GetEvents();
+        public void AddPlayer(int id, Player player);
     }
 }

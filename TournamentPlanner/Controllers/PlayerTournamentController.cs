@@ -1,10 +1,12 @@
-﻿using BLL.Interfaces;
+﻿using BLL.DTO;
+using BLL.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Linq;
 using System.Threading.Tasks;
 using TournamentPlanner.Models;
+using System.Collections.Generic;
 
 namespace TournamentPlanner.Controllers
 {
@@ -71,8 +73,15 @@ namespace TournamentPlanner.Controllers
         [HttpPost]
         public async Task<IActionResult> AddPlayerToTour(int Events, int playerId, int tourId)
         {
+            var curTournament = tourService.GetTourById(tourId);
+            var curPlayer = playerService.GetPlayer(playerId);
 
-            return View();
+            if (curPlayer != null && curTournament != null)
+            {
+               tourService.AddPlayer(tourId, curPlayer);
+            }
+
+                return RedirectToAction("Index", "Tournaments");
         }
     }
 

@@ -31,7 +31,6 @@ namespace TournamentPlanner.Models
                     playerService.Edit(adminPlayer);
                 }
                     
-                    
 
                 if (playerService.GetPlayers().Any(x => x.UserId == user.Id))
                     return RedirectToAction("EnabledTournamentsList", "Tournaments");
