@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -56,12 +57,24 @@ namespace DAL.Repositories
            return _context.Events;  
         }
 
-        public void AddPlayer(int id, Player player)
+        public void AddPlayer(int tourId, int playerId)
         {
-            var tour = _context.Tournaments.Find(id);
-            tour.Players.Add(player);
+            var tour = _context.Tournaments.
+                Include(x => x.Players).
+                First(x => x.Id == tourId); 
+            var palyer = _context.Players.Find(playerId);
+
+            tour.Players.Add(palyer);
             //_context.Entry(player).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
             _context.SaveChanges();
+        }
+
+        public bool IsPlayerInTour(int tourId, int playerId)
+        {
+            var tour = _context.Tournaments.
+                Include(x => x.Players).
+                First(x => x.Id == tourId);
+            return tour.Players.Any(x => x.Id == playerId);
         }
     }
 }

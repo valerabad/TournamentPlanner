@@ -21,7 +21,7 @@ namespace TournamentPlanner.DAL.Entities
         public DateTime DateEnd { get; set; }
         public int CourtsCount { get; set; }
 
-        public List<Player> Players { get; set; } = new List<Player>();
+        public virtual List<Player> Players { get; set; }  = new List<Player>();
 
         // TODO
         //public int AddressID { get; set; }

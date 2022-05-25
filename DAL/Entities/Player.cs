@@ -20,7 +20,7 @@ namespace TournamentPlanner.DAL.Entities
         public int? ClubId { get; set; }
         public virtual Club Club { get; set; }
         public string UserId { get; set; }
-        public List<Tournament> Tournaments { get; set; } = new List<Tournament>();
+        public virtual List<Tournament> Tournaments { get; set; } = new List<Tournament>();
 
     }
 }

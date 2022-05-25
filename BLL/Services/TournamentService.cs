@@ -103,24 +103,29 @@ namespace BLL.Services
             throw new NotImplementedException();
         }
 
-        public void AddPlayer(int tourId, PlayerDTO _player)
+        public bool IsPlayerInTour(int tourId, int playerId)
         {
-            Player player = new Player()
-            {
-                Id = _player.Id,
-                FirstName = _player.FirstName,
-                LastName = _player.LastName,
-                Birthday = _player.Birthday,
-                ClubId = _player.ClubId,
-                EntryMethod = _player.EntryMethod,
-                Gender = _player.Gender,
-                Notes = _player.Notes,
-                UserId = _player.UserId,
-                //Tournaments
-                //Clubs
-            };
+            return tournamentRepository.IsPlayerInTour(tourId, playerId);
+        }
 
-            tournamentRepository.AddPlayer(tourId, player);
+        public void AddPlayer(int tourId, int playerId)
+        {
+            //Player player = new Player()
+            //{
+            //    Id = _player.Id,
+            //    FirstName = _player.FirstName,
+            //    LastName = _player.LastName,
+            //    Birthday = _player.Birthday,
+            //    ClubId = _player.ClubId,
+            //    EntryMethod = _player.EntryMethod,
+            //    Gender = _player.Gender,
+            //    Notes = _player.Notes,
+            //    UserId = _player.UserId,
+            //    //Tournaments
+            //    //Clubs
+            //};
+
+            tournamentRepository.AddPlayer(tourId, playerId);
         }
 
         public IEnumerable<TournamentDTO> GetByActualDate()

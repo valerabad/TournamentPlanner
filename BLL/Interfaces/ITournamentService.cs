@@ -13,14 +13,15 @@ namespace BLL.Interfaces
         TournamentDTO GetTourById(int? id);
         void Create(TournamentDTO tour);
 
-        void Edit(TournamentDTO player);
+        void Edit(TournamentDTO tour);
         void DeleteById(int? id);
         void Publish();
         //TODO method for several players
         //void AddPlayers(List<PlayerDTO> players);
-        void AddPlayer(int tourId, PlayerDTO _player);
+        void AddPlayer(int tourId, int playerId);
         IEnumerable<TournamentDTO> GetByActualDate();
 
         public IEnumerable<EventDTO> GetEvetsList();
+        public bool IsPlayerInTour(int tourId, int playerId);
     }
 }

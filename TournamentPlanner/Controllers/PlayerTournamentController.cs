@@ -74,14 +74,22 @@ namespace TournamentPlanner.Controllers
         public async Task<IActionResult> AddPlayerToTour(int Events, int playerId, int tourId)
         {
             var curTournament = tourService.GetTourById(tourId);
-            var curPlayer = playerService.GetPlayer(playerId);
+            //var curPlayer = playerService.GetPlayer(playerId);
 
-            if (curPlayer != null && curTournament != null)
+            if (curTournament != null)
             {
-               tourService.AddPlayer(tourId, curPlayer);
+                if (!tourService.IsPlayerInTour(tourId, playerId))
+                    tourService.AddPlayer(tourId, playerId);
+                else
+                    return RedirectToAction("Error");
             }
 
-                return RedirectToAction("Index", "Tournaments");
+            return RedirectToAction("Index", "Tournaments");
+        }
+
+        public async Task<IActionResult> Error()
+        {
+            return View();
         }
     }
 
