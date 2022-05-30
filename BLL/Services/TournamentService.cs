@@ -84,7 +84,7 @@ namespace BLL.Services
             var tour = tournamentRepository.Get(id.Value);
             return new TournamentDTO()
             {
-                Id=tour.Id,
+                Id = tour.Id,
                 Name = tour.Name,
                 Description = tour.Description,
                 Logo = tour.Logo,
@@ -94,7 +94,22 @@ namespace BLL.Services
                 DateStart = tour.DateStart,
                 Email = tour.Email,
                 EntryMethod = (DTO.EntryMethodEnum)tour.EntryMethod,
-                Events = tour.Events
+                Events = tour.Events,
+                Players = new List<PlayerDTO>(
+                    tour.Players.Select(x => new PlayerDTO
+                    {
+                        Id = x.Id,
+                        Birthday = x.Birthday,
+                        ClubId = x.ClubId,
+                        UserId = x.UserId,
+                        EntryMethod = x.EntryMethod,
+                        FirstName = x.FirstName,
+                        LastName = x.LastName,
+                        Gender = x.Gender,
+                        Notes = x.Notes
+                        //AddressId = 
+
+                    }))
             };
         }
 

@@ -38,7 +38,7 @@ namespace DAL.Repositories
 
         public Tournament Get(int id)
         {
-            return _context.Tournaments.Find(id);
+            return _context.Tournaments.Include(x => x.Players).First(x => x.Id == id );
         }
 
         public IEnumerable<Tournament> GetAll()

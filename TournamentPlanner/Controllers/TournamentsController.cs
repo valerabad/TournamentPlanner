@@ -73,7 +73,22 @@ namespace TournamentPlanner.Controllers
                 DateStart = tour.DateStart,
                 EntryMethod = tour.EntryMethod,
                 Events = tour.Events,
-                CourtsCount = tour.CourtsCount
+                CourtsCount = tour.CourtsCount,
+                Players = new List<PlayerViewModel>(
+                    tour.Players.Select(x => new PlayerViewModel
+                    {
+                        Id = x.Id,
+                        Birthday = x.Birthday,
+                        ClubId = x.ClubId,
+                        EntryMethod = x.EntryMethod,
+                        FirstName = x.FirstName,
+                        LastName = x.LastName,
+                        Gender = x.Gender,
+                        Notes = x.Notes
+                        //UserId = x.UserId,
+                        //AddressId = 
+
+                    }))
             };
 
             return View(tournamentViewModel);

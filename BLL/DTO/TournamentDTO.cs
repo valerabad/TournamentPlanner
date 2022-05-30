@@ -20,7 +20,8 @@ namespace BLL.DTO
         public DateTime DateStart { get; set; }
         public DateTime DateEnd { get; set; }
         public int CourtsCount { get; set; }
+        public virtual List<PlayerDTO> Players { get; set; } = new List<PlayerDTO>();
 
-        
+
     }
 }

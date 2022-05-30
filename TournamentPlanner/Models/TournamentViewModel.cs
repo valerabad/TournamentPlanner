@@ -1,5 +1,6 @@
 ﻿using BLL.DTO;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace TournamentPlanner.Models
@@ -19,5 +20,6 @@ namespace TournamentPlanner.Models
         //[DataType(DataType.DateTime)]
         public DateTime DateEnd { get; set; }
         public int CourtsCount { get; set; }
+        public virtual List<PlayerViewModel> Players { get; set; } = new List<PlayerViewModel>();
     }
 }
